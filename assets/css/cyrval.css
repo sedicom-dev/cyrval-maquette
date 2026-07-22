@@ -1,0 +1,1448 @@
+/* =============================================================
+   CYRVAL — maquette de référence
+   Studio Toinon pour SEDICOM — juillet 2026
+   Feuille de styles unique, partagée par toutes les pages.
+   Ordre : police, tokens, base, utilitaires, composants,
+   sections, pied de page, responsive.
+   ============================================================= */
+
+/* ---------- 1. Police ---------- */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/inter-latin-var.woff2') format('woff2');
+}
+
+/* ---------- 2. Tokens ---------- */
+
+:root {
+  /* Couleurs de marque */
+  --bleu: #00374D;
+  --bleu-appui: #002A3B;
+  --or: #C69970;
+  --sable: #F4EAE1;
+
+  /* Extension web */
+  --encre: #1C2B33;
+  --gris: #5C6E76;
+  --gris-clair: #8FA0A7;
+  --clair-sur-fonce: #C9D3D6;
+  --bord: #DDE4E5;
+  --blanc: #FFFFFF;
+  --fond: #F7F9FA;
+
+  /* Typographie */
+  --font: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --t-hero: 56px;
+  --t-hero-page: 44px;
+  --t-section: 40px;
+  --t-carte: 24px;
+
+  /* Grille */
+  --largeur-max: 1440px;
+  --marge-laterale: 48px;
+
+  /* Décroché : l'onglet qui plonge depuis l'arête haute.
+     Les rayons se déduisent de la hauteur du bloc, voir 5.1. */
+  --h-onglet: 56px;     /* profondeur de l'onglet de section */
+  --r-arrondi: 26px;    /* arrondi des visuels et des blocs */
+}
+
+/* ---------- 3. Base ---------- */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: var(--bleu); }
+a:hover { color: var(--bleu-appui); }
+
+h1, h2, h3, p { margin: 0; text-wrap: pretty; }
+
+img { max-width: 100%; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 4. Utilitaires ---------- */
+
+.wrap {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: 130px var(--marge-laterale);
+}
+
+.wrap--court { padding: 120px var(--marge-laterale); }
+.wrap--serre { padding: 110px var(--marge-laterale); }
+
+.section--blanc { background: var(--blanc); }
+.section--fond { background: var(--fond); }
+.section--sable { background: var(--sable); }
+.section--bleu { background: var(--bleu); }
+
+/* Toutes les sections servent d'ancrage à leur décroché */
+main > section { position: relative; }
+
+.surtitre {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font: 600 13px/1.2 var(--font);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gris);
+}
+
+.surtitre--centre { justify-content: center; }
+.surtitre--clair { color: var(--sable); }
+.surtitre--doux { color: var(--clair-sur-fonce); }
+
+.surtitre::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--or);
+  flex-shrink: 0;
+}
+
+.surtitre--trait::before {
+  width: 22px; height: 1.5px;
+  border-radius: 0;
+}
+
+.titre-section {
+  font: 600 var(--t-section) / 1.15 var(--font);
+  color: var(--bleu);
+}
+
+.titre-section--clair { color: var(--blanc); }
+
+.chapo {
+  font: 400 24px/1.4 var(--font);
+  color: var(--gris);
+  max-width: 640px;
+}
+
+.chapo--clair { color: var(--sable); }
+
+.texte {
+  font: 400 18px/1.7 var(--font);
+  color: var(--encre);
+}
+
+.texte--doux { color: var(--clair-sur-fonce); }
+
+.entete-bloc {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.entete-bloc .chapo { margin: 20px auto 0; }
+
+.filet-or {
+  width: 44px; height: 2px;
+  background: var(--or);
+  flex-shrink: 0;
+}
+
+.centre { text-align: center; }
+
+/* Apparition au défilement (activée seulement si JS) */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+
+.js .reveal.est-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  * { scroll-behavior: auto !important; }
+}
+
+/* ---------- 5. Composants ---------- */
+
+/* 5.1 Décroché
+
+   Le motif de la maquette : un onglet collé à l'arête haute d'un bloc,
+   dans la couleur de ce qui précède, raccordé de chaque côté par un
+   congé concave qui étale la couleur le long de l'arête. Le bandeau de
+   navigation plonge dans le hero, chaque section plonge dans la
+   précédente. Les deux congés sont les pseudo-éléments, posés à
+   l'extérieur de l'onglet, tangents à l'arête. */
+
+/* Géométrie. En vertical, le congé concave et l'arrondi du bas se partagent
+   toute la hauteur du bloc (0,42 + 0,58 = 1) : les deux courbes sont donc
+   tangentes, sans segment droit entre elles, le flanc est une seule vague
+   continue. Toute autre répartition laisse une goutte au-dessus du coin.
+
+   En horizontal, les deux arcs sont étirés du même facteur : ils restent
+   tangents, mais le flanc s'allonge et s'aplatit. --etirement est le seul
+   réglage : 1 donne des arcs de cercle, au-delà des arcs d'ellipse de plus
+   en plus couchés. Il coûte de la largeur, le bandeau déborde de
+   --rx-conge de chaque côté. Essayé à 1,6, écarté : la courbe couchée ne
+   tenait pas. On reste sur le cercle. */
+.nav,
+.decroche {
+  --etirement: 1;
+  --ry-conge: calc(var(--h-bloc) * .42);
+  --rx-conge: calc(var(--ry-conge) * var(--etirement));
+  --ry-bas: calc(var(--h-bloc) * .58);
+  --rx-bas: calc(var(--ry-bas) * var(--etirement));
+  position: relative;
+  border-radius: 0 0 var(--rx-bas) var(--rx-bas) / 0 0 var(--ry-bas) var(--ry-bas);
+}
+
+/* Le congé recouvre l'onglet d'1 px. Deux bords anticrénelés posés côte à côte
+   laissent un liseré clair, très visible depuis que l'onglet est centré et
+   tombe donc souvent sur un demi-pixel. Ce pixel de recouvrement est en dehors
+   de la forme du dégradé, donc opaque : la courbe n'est pas modifiée, seul le
+   raccord est franc. */
+.nav::before, .nav::after,
+.decroche::before, .decroche::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: calc(var(--rx-conge) + 1px);
+  height: var(--ry-conge);
+  pointer-events: none;
+}
+
+.nav::before,
+.decroche::before { left: calc(-1 * var(--rx-conge)); }
+
+.nav::after,
+.decroche::after { right: calc(-1 * var(--rx-conge)); }
+
+.nav::before {
+  background: radial-gradient(var(--rx-conge) var(--ry-conge) at 0 100%,
+    transparent 99.5%, var(--blanc) 100%);
+}
+
+.nav::after {
+  background: radial-gradient(var(--rx-conge) var(--ry-conge) at 100% 100%,
+    transparent 99.5%, var(--blanc) 100%);
+}
+
+.decroche::before {
+  background: radial-gradient(var(--rx-conge) var(--ry-conge) at 0 100%,
+    transparent 99.5%, var(--precedent) 100%);
+}
+
+.decroche::after {
+  background: radial-gradient(var(--rx-conge) var(--ry-conge) at 100% 100%,
+    transparent 99.5%, var(--precedent) 100%);
+}
+
+/* L'onglet de section porte le surtitre : le motif sert à quelque chose */
+.decroche {
+  --h-bloc: var(--h-onglet);
+  position: absolute;
+  top: 0;
+  /* centré sur la page, comme le bandeau de navigation */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: var(--h-onglet);
+  padding: 0 38px 6px;
+  margin: 0;
+  background: var(--precedent);
+  font: 600 13px/1 var(--font);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gris);
+  white-space: nowrap;
+}
+
+.decroche__point {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--or);
+  flex-shrink: 0;
+}
+
+/* Onglet posé sur une couleur foncée */
+.decroche--clair { color: var(--sable); }
+
+/* Variante d'angle : le même décroché mordu dans le coin haut gauche d'une
+   image, pour y loger le thème de l'article. Deux congés là aussi, mais l'un
+   file le long de l'arête haute et l'autre le long de l'arête gauche. Le coin
+   extérieur reprend l'arrondi de l'image pour que le contour reste continu.
+   La tangence joue sur le flanc droit : congé + arrondi = hauteur du bloc.
+
+   L'étiquette déborde d'1 px en haut et à gauche, avec 1 px de rayon en plus :
+   son arc de coin garde le même centre que celui de l'image et passe donc
+   juste à l'extérieur. Sans ce décalage, les deux arcs se superposent au pixel
+   près et l'anticrénelage laisse voir l'image sous le blanc. Le débord se fait
+   sur le fond de la section, de la même couleur : invisible. */
+.decroche--coin {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  z-index: 2;
+  height: calc(var(--h-bloc) + 1px);
+  padding: 1px 24px 0 23px;
+  border-radius: calc(var(--r-arrondi) + 1px) 0 var(--ry-bas) 0;
+}
+
+/* Congé du bas : même recouvrement d'1 px, mais vers le haut. Le bord bas du
+   bloc ne bouge pas, donc le centre du dégradé et la courbe non plus. */
+.decroche--coin::before {
+  left: 0;
+  top: calc(100% - 1px);
+  width: var(--rx-conge);
+  height: calc(var(--ry-conge) + 1px);
+  background: radial-gradient(var(--rx-conge) var(--ry-conge) at 100% 100%,
+    transparent 99.5%, var(--precedent) 100%);
+}
+
+/* 5.2 Bouton */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 4px 6px 4px 26px;
+  height: 50px;
+  border-radius: 999px;
+  font: 500 16px/1 var(--font);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  background: var(--bleu);
+  color: var(--blanc);
+  border: 1.5px solid transparent;
+  transition: background .25s ease, color .25s ease, border-color .25s ease;
+}
+
+.btn__fleche {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  font-size: 16px;
+  background: rgba(255, 255, 255, .2);
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.btn:hover { background: var(--bleu-appui); color: var(--blanc); }
+
+.btn--secondaire {
+  background: transparent;
+  color: var(--bleu);
+  border-color: var(--bleu);
+}
+
+.btn--secondaire .btn__fleche { background: rgba(0, 55, 77, .08); }
+.btn--secondaire:hover { background: var(--bleu); color: var(--blanc); border-color: var(--bleu); }
+.btn--secondaire:hover .btn__fleche { background: rgba(255, 255, 255, .2); }
+
+.btn--sur-fonce {
+  background: var(--blanc);
+  color: var(--bleu);
+}
+
+.btn--sur-fonce .btn__fleche { background: rgba(0, 55, 77, .12); }
+.btn--sur-fonce:hover { background: var(--sable); color: var(--bleu); }
+
+/* 5.3 Média (image ou bloc de remplacement) */
+
+.media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--sable);
+}
+
+.media img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+.media--vide {
+  background: repeating-linear-gradient(135deg, #F4EAE1, #F4EAE1 12px, #ECE0D2 12px, #ECE0D2 24px);
+}
+
+.media--vide .media__legende {
+  font: 400 13px/1.5 'SFMono-Regular', Consolas, Menlo, monospace;
+  color: #8A7256;
+  text-align: center;
+  letter-spacing: .02em;
+  padding: 16px;
+  max-width: 78%;
+}
+
+/* Découpes issues du logo */
+.media--arche { border-radius: 50% 50% 0 0; }
+.media--biseau { border-radius: 0 88px 0 0; }
+.media--arrondi { border-radius: var(--r-arrondi); }
+
+/* 5.4 Carte d'information */
+
+.carte {
+  background: var(--blanc);
+  border: 1px solid var(--bord);
+  border-radius: var(--r-arrondi);
+  padding: 44px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+.carte__titre {
+  font: 600 var(--t-carte) / 1.25 var(--font);
+  color: var(--bleu);
+}
+
+.carte__texte {
+  font: 400 18px/1.7 var(--font);
+  color: var(--encre);
+  flex: 1;
+}
+
+.carte .btn { align-self: flex-start; }
+
+/* 5.5 Article
+
+   Pas de carte : le visuel arrondi porte le bloc, le texte se pose dessous
+   à même le fond de la section. L'étiquette de thème est mordue dans le coin
+   haut gauche du visuel (voir .decroche--coin). */
+
+.article__media {
+  --precedent: var(--blanc);   /* le fond qui entoure l'image */
+  --h-bloc: 44px;              /* hauteur de l'étiquette de thème */
+  position: relative;
+}
+
+.article__corps { padding-top: 22px; }
+
+.article__titre {
+  font: 600 21px/1.35 var(--font);
+  color: var(--bleu);
+  margin-bottom: 10px;
+}
+
+.article__resume {
+  font: 400 15px/1.6 var(--font);
+  color: var(--gris);
+  margin-bottom: 18px;
+}
+
+.lien-fleche {
+  display: inline-block;
+  font: 500 16px/1 var(--font);
+  color: var(--bleu);
+  text-decoration: none;
+  border-bottom: 1px solid var(--or);
+  padding-bottom: 4px;
+  transition: border-color .25s ease;
+}
+
+.lien-fleche:hover { border-bottom-color: var(--bleu); }
+
+/* ---------- 6. En-tête ---------- */
+
+.entete {
+  --pad-entete: 13px;   /* marge au-dessus et en dessous de la ligne */
+  --h-logo: 57px;       /* pilote la hauteur de la ligne, donc du bandeau */
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: transparent;
+  transition: background .3s ease, box-shadow .3s ease;
+}
+
+.entete__inner {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: var(--pad-entete) var(--marge-laterale);
+  transition: padding .25s ease;
+}
+
+.entete__logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--blanc);
+  text-decoration: none;
+  transform-origin: left center;
+  transition: transform .25s ease, color .3s ease;
+}
+
+.entete__logo svg {
+  display: block;
+  height: var(--h-logo);
+  width: calc(var(--h-logo) * 2.11);   /* rapport du logo d'origine */
+}
+
+/* État défilé */
+.entete.est-defilee {
+  --pad-entete: 9px;
+  background: var(--blanc);
+  box-shadow: 0 1px 0 var(--bord), 0 8px 24px rgba(0, 55, 77, .06);
+}
+
+.entete.est-defilee .entete__logo { color: var(--bleu); transform: scale(.82); }
+
+/* Navigation : le décroché de l'accueil, collé au bord haut de la page.
+   Le retrait négatif annule la marge de l'en-tête pour que l'onglet
+   parte de l'arête ; le rembourrage haut ramène les liens sur la ligne
+   du logo. Une seule formule pour les deux états : quand l'en-tête
+   blanchit au défilement, l'onglet blanc s'y fond sans raccord visible. */
+.nav {
+  --h-bloc: calc(var(--pad-entete) * 2 + var(--h-logo));
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  white-space: nowrap;
+  align-self: flex-start;
+  height: var(--h-bloc);
+  margin: calc(-1 * var(--pad-entete)) var(--rx-conge) 0;
+  padding: 0 36px;
+  background: var(--blanc);
+  transition: height .25s ease, margin .25s ease;
+}
+
+/* Même traitement que les décrochés : capitales espacées. La pastille dorée
+   du survol est posée hors flux, dans l'espace entre deux liens : elle
+   apparaît sans décaler la navigation. */
+.nav a {
+  position: relative;
+  font: 600 12px/1 var(--font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--encre);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.nav a::before {
+  content: '';
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  width: 6px; height: 6px;
+  margin-top: -3px;
+  border-radius: 50%;
+  background: var(--or);
+  opacity: 0;
+  transform: scale(.4);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.nav a:hover,
+.nav a.est-active { color: var(--bleu); }
+
+.nav a:hover::before,
+.nav a.est-active::before { opacity: 1; transform: scale(1); }
+
+.entete__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Les trois pastilles de l'en-tête (accès client, LinkedIn, menu) sont en
+   verre dépoli sur la photo du hero. Le flou tombe dès que l'en-tête blanchit :
+   il n'y a plus rien à flouter derrière, et il coûterait une couche de
+   composition pour rien. */
+.lien-acces {
+  font: 600 12px/1 var(--font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 11px 20px;
+  border-radius: 999px;
+  white-space: nowrap;
+  color: var(--blanc);
+  border: 1px solid rgba(255, 255, 255, .55);
+  background: rgba(255, 255, 255, .12);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  transition: color .3s ease, border-color .3s ease, background .3s ease;
+}
+
+.entete.est-defilee .lien-acces {
+  color: var(--bleu);
+  border-color: var(--bord);
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.lien-linkedin {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 12px/1 var(--font);
+  text-decoration: none;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, .15);
+  color: var(--blanc);
+  border: 1px solid rgba(255, 255, 255, .5);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  transition: background .3s ease, color .3s ease, border-color .3s ease;
+}
+
+.entete.est-defilee .lien-linkedin {
+  background: var(--bleu);
+  color: var(--blanc);
+  border-color: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* Bouton menu (tablette et mobile) */
+.burger {
+  display: none;
+  width: 46px; height: 46px;
+  border: 1px solid rgba(255, 255, 255, .5);
+  background: rgba(255, 255, 255, .12);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  border-radius: 999px;
+  cursor: pointer;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .3s ease, border-color .3s ease;
+}
+
+.burger__trait {
+  position: relative;
+  display: block;
+  width: 18px; height: 1.5px;
+  background: var(--blanc);
+  transition: background .3s ease, transform .3s ease;
+}
+
+.burger__trait::before,
+.burger__trait::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 18px; height: 1.5px;
+  background: inherit;
+  transition: transform .3s ease, opacity .2s ease;
+}
+
+.burger__trait::before { top: -6px; }
+.burger__trait::after { top: 6px; }
+
+.entete.est-defilee .burger {
+  border-color: var(--bord);
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.entete.est-defilee .burger__trait { background: var(--bleu); }
+
+.entete.menu-ouvert .burger {
+  border-color: var(--bord);
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.entete.menu-ouvert .burger__trait { background: transparent; }
+.entete.menu-ouvert .burger__trait::before { transform: translateY(6px) rotate(45deg); background: var(--bleu); }
+.entete.menu-ouvert .burger__trait::after { transform: translateY(-6px) rotate(-45deg); background: var(--bleu); }
+
+/* Panneau de menu déroulant */
+.menu-mobile {
+  display: none;
+  background: var(--blanc);
+  border-top: 1px solid var(--bord);
+  box-shadow: 0 16px 32px rgba(0, 55, 77, .08);
+}
+
+.menu-mobile__inner {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: 24px var(--marge-laterale) 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.menu-mobile a {
+  font: 400 18px/1 var(--font);
+  color: var(--encre);
+  text-decoration: none;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--bord);
+}
+
+.menu-mobile a.est-active { color: var(--bleu); font-weight: 500; }
+
+.menu-mobile__pied {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 24px;
+}
+
+.menu-mobile__pied .lien-acces,
+.menu-mobile__pied .lien-linkedin {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.menu-mobile__pied .lien-acces {
+  color: var(--bleu);
+  border-color: var(--bord);
+  background: transparent;
+}
+
+.menu-mobile__pied .lien-linkedin {
+  background: var(--bleu);
+  color: var(--blanc);
+  border-color: transparent;
+}
+
+/* ---------- 7. Hero ---------- */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.hero__fond { position: absolute; inset: 0; }
+
+.hero__voile {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg,
+    rgba(0, 55, 77, .92) 0%,
+    rgba(0, 55, 77, .72) 42%,
+    rgba(0, 55, 77, .28) 75%,
+    rgba(0, 55, 77, .08) 100%);
+}
+
+.hero__contenu {
+  position: relative;
+  width: 100%;
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: 228px var(--marge-laterale) 96px;
+}
+
+.hero__titre {
+  font: 600 var(--t-hero) / 1.1 var(--font);
+  color: var(--blanc);
+  max-width: 820px;
+  margin-bottom: 44px;
+}
+
+.souligne-or {
+  text-decoration: underline;
+  text-decoration-color: var(--or);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+
+/* Hero de page intérieure : aplat bleu, sans motif */
+.hero-page {
+  position: relative;
+  overflow: hidden;
+  background: var(--bleu);
+}
+
+.hero-page__contenu {
+  position: relative;
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: 224px var(--marge-laterale) 96px;
+}
+
+.hero-page__titre {
+  font: 600 var(--t-hero-page) / 1.15 var(--font);
+  color: var(--blanc);
+  max-width: 820px;
+}
+
+.hero-page__titre .souligne-or { text-underline-offset: 6px; }
+
+/* ---------- 8. Sections d'accueil ---------- */
+
+/* 8.1 Manifeste */
+
+.manifeste {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.manifeste__texte { max-width: 520px; }
+
+.manifeste__phrase {
+  font: 400 32px/1.4 var(--font);
+  color: var(--bleu);
+  margin-bottom: 32px;
+}
+
+.manifeste__intro {
+  font: 400 18px/1.7 var(--font);
+  color: var(--encre);
+  max-width: 44ch;
+  margin-bottom: 40px;
+}
+
+.manifeste__visuel {
+  position: relative;
+  height: 520px;
+}
+
+.manifeste__vignette {
+  position: absolute;
+  left: -32px; bottom: -32px;
+  width: 180px; height: 180px;
+  box-shadow: 0 12px 32px rgba(0, 55, 77, .14);
+}
+
+/* 8.2 Vos besoins */
+
+.grille-deux {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 8.3 Les deux pôles */
+
+.poles {
+  border-top: 1px solid var(--bord);
+  border-bottom: 1px solid var(--bord);
+}
+
+.poles__grille {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.pole { padding: 56px 64px 56px 0; }
+
+.pole:first-child { border-right: 1px solid var(--bord); }
+.pole:last-child { padding: 56px 0 56px 64px; }
+
+.pole__label {
+  font: 600 13px/1.2 var(--font);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gris);
+}
+
+.pole .filet-or { margin: 20px 0 24px; }
+
+.pole__texte {
+  font: 400 18px/1.7 var(--font);
+  color: var(--encre);
+  margin-bottom: 32px;
+}
+
+/* 8.4 Méthode */
+
+.methode__titre { margin-bottom: 88px; }
+
+.methode__etapes {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 40px;
+  margin-bottom: 72px;
+}
+
+.methode__rail,
+.methode__progression {
+  position: absolute;
+  top: 23px;
+  left: 0;
+  height: 2px;
+}
+
+.methode__rail { right: 0; background: rgba(244, 234, 225, .2); }
+
+.methode__progression {
+  width: 0;
+  background: var(--or);
+  transition: width .6s ease;
+}
+
+.etape { position: relative; }
+
+.js .etape {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+
+.js .etape.est-visible { opacity: 1; transform: translateY(0); }
+
+.etape__numero {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: var(--bleu);
+  border: 2px solid var(--or);
+  color: var(--sable);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 600 16px/1 var(--font);
+  margin-bottom: 24px;
+}
+
+.etape__titre {
+  font: 600 18px/1.3 var(--font);
+  color: var(--blanc);
+  margin-bottom: 8px;
+}
+
+.etape__texte {
+  font: 400 15px/1.6 var(--font);
+  color: var(--clair-sur-fonce);
+}
+
+/* 8.5 Actualités */
+
+.actus__entete {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+
+/* Grille dissymétrique : l'article à la une occupe la colonne large, les deux
+   brèves s'empilent à côté. Les brèves s'étirent pour que les deux colonnes
+   se terminent à la même ligne : les trois articles forment un seul bloc. */
+.actus__grille {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 48px;
+  align-items: stretch;
+}
+
+.article--une .article__media { aspect-ratio: 16 / 9; }
+.article--une .article__corps { padding-top: 28px; }
+
+.article--une .article__titre {
+  font: 600 var(--t-carte) / 1.3 var(--font);
+  margin-bottom: 14px;
+}
+
+.article__auteur {
+  font: 400 14px/1.6 var(--font);
+  color: var(--gris);
+  margin-bottom: 10px;
+}
+
+.actus__breves {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  height: 100%;
+}
+
+.article--breve {
+  display: grid;
+  grid-template-columns: 44% 1fr;
+  gap: 24px;
+  align-items: stretch;
+  flex: 1;
+}
+
+/* Pas de proportion imposée : le visuel prend la hauteur de la brève, c'est ce
+   qui aligne le bas des deux colonnes. Il est sorti du flux pour ne pas peser
+   dans le calcul de cette hauteur, sinon la proportion de la photo source
+   commanderait la grille au lieu de l'article à la une. */
+.article--breve .article__media {
+  --h-bloc: 34px;
+  --r-arrondi: 20px;
+}
+
+.article--breve .media {
+  position: absolute;
+  inset: 0;
+}
+
+.article--breve .article__corps { align-self: center; }
+
+.article--breve .decroche--coin {
+  padding: 0 17px 0 15px;
+  font-size: 11px;
+}
+
+.article--breve .article__corps { padding-top: 0; }
+.article--breve .article__titre { font-size: 18px; }
+
+.actus__breves .article--breve + .article--breve {
+  border-top: 1px solid var(--bord);
+  padding-top: 30px;
+}
+
+/* ---------- 9. Sections Pôle Conseil ---------- */
+
+.accompagnement {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: stretch;
+}
+
+.accompagnement__texte { max-width: 560px; }
+.accompagnement__texte .titre-section { display: block; margin-bottom: 32px; }
+.accompagnement__texte .texte + .texte { margin-top: 28px; }
+
+/* le visuel se cale sur la hauteur du texte, avec un plancher : sinon il
+   dépasse de très haut dès qu'on retire un paragraphe */
+.accompagnement__visuel { min-height: 360px; }
+
+/* Méthode de la page Pôle Conseil : titre à gauche, texte à droite */
+.methode-page {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 72px;
+  align-items: start;
+}
+
+.methode-page__titre .titre-section { display: block; margin-bottom: 28px; }
+
+.domaines__entete {
+  max-width: 720px;
+  margin: 0 auto 88px;
+  text-align: center;
+}
+
+.domaines__corps {
+  display: grid;
+  grid-template-columns: 2px 1fr;
+  gap: 56px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.domaines__rail {
+  position: relative;
+  width: 2px;
+  background: rgba(244, 234, 225, .2);
+  justify-self: center;
+}
+
+.domaines__progression {
+  position: absolute;
+  top: 0; left: 0;
+  width: 2px;
+  height: 0;
+  background: var(--or);
+  transition: height .6s ease;
+}
+
+.domaines__liste {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.js .domaine {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+
+.js .domaine.est-visible { opacity: 1; transform: translateY(0); }
+
+.domaine__numero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  font: 600 13px/1 var(--font);
+  color: var(--or);
+}
+
+.domaine__numero::after {
+  content: '';
+  width: 32px; height: 1px;
+  background: rgba(244, 234, 225, .4);
+}
+
+.domaine__titre {
+  font: 600 var(--t-carte) / 1.25 var(--font);
+  color: var(--blanc);
+  margin-bottom: 16px;
+}
+
+.domaine__texte { max-width: 64ch; }
+
+.transition-bloc {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 120px var(--marge-laterale);
+  text-align: center;
+}
+
+.transition-bloc .texte {
+  text-align: left;
+  margin-bottom: 48px;
+}
+
+.transition-bloc .titre-section {
+  display: block;
+  margin-bottom: 40px;
+}
+
+/* ---------- 10. Contact ---------- */
+
+.formulaire {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--blanc);
+  border: 1px solid var(--bord);
+  border-radius: var(--r-arrondi);
+  padding: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.champ__label,
+.formulaire__legende {
+  font: 600 13px/1.2 var(--font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gris);
+}
+
+.formulaire__legende { margin-bottom: 12px; }
+
+.formulaire input[type="text"],
+.formulaire textarea {
+  border: 1px solid var(--bord);
+  border-radius: 12px;   /* des champs carrés dans un bloc arrondi jurent */
+  padding: 14px 16px;
+  font: 400 16px/1.4 var(--font);
+  color: var(--encre);
+  background: var(--fond);
+}
+
+.formulaire textarea { line-height: 1.7; resize: vertical; }
+
+.formulaire input[type="text"]:focus,
+.formulaire textarea:focus {
+  outline: 2px solid var(--or);
+  outline-offset: -1px;
+}
+
+.choix {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.choix label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 400 16px/1 var(--font);
+  color: var(--encre);
+}
+
+.champs-double {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ---------- 11. Signature ---------- */
+
+.signature {
+  background: var(--blanc);
+  border-top: 1px solid var(--bord);
+}
+
+.signature__inner {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: 64px var(--marge-laterale);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.signature__inner svg {
+  width: 130px; height: 61px;
+  color: var(--bleu);
+  flex-shrink: 0;
+}
+
+.signature__phrase {
+  font: 400 24px/1.4 var(--font);
+  color: var(--bleu);
+  max-width: 520px;
+  text-align: right;
+}
+
+/* ---------- 12. Pied de page ---------- */
+
+.pied { background: var(--bleu); }
+
+.pied__inner {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: 80px var(--marge-laterale) 40px;
+}
+
+.pied__haut {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 56px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid rgba(244, 234, 225, .18);
+}
+
+.pied__logo {
+  width: 140px; height: 66px;
+  color: var(--or);
+  margin-bottom: 28px;
+  display: block;
+}
+
+.pied p {
+  font: 400 15px/1.6 var(--font);
+  color: var(--sable);
+}
+
+.pied__titre {
+  font: 600 13px/1.2 var(--font);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--or);
+  margin-bottom: 20px;
+}
+
+.pied__liens {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pied__liens a {
+  font: 400 15px/1.6 var(--font);
+  color: var(--sable);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.pied__liens a:hover { color: var(--or); }
+
+.pied__reseaux {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.pied__reseaux .lien-linkedin {
+  width: 38px; height: 38px;
+  font-size: 13px;
+  background: rgba(244, 234, 225, .12);
+  color: var(--sable);
+  border: 0;
+}
+
+.pied__reseaux .lien-linkedin:hover { background: var(--or); color: var(--bleu); }
+
+.pied__bas {
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pied__bas span,
+.pied__bas a {
+  font: 400 13px/1.5 var(--font);
+  color: var(--gris-clair);
+  text-decoration: none;
+}
+
+.pied__bas a:hover { color: var(--sable); }
+
+/* =============================================================
+   13. Responsive
+   ============================================================= */
+
+/* Sous 1300 px, la navigation complète et ses congés ne tiennent plus
+   entre le logo et l'accès client : menu déplié */
+@media (max-width: 1300px) {
+  .nav { display: none; }
+  .entete__actions { display: none; }
+  .burger { display: flex; }
+  .entete.menu-ouvert { background: var(--blanc); box-shadow: 0 1px 0 var(--bord); }
+  .entete.menu-ouvert .entete__logo { color: var(--bleu); }
+  .entete.menu-ouvert .menu-mobile { display: block; }
+}
+
+/* Tablette */
+@media (max-width: 1023px) {
+  :root {
+    --t-hero: 46px;
+    --t-hero-page: 38px;
+    --t-section: 34px;
+    --marge-laterale: 32px;
+    --h-onglet: 50px;
+  }
+
+  .wrap, .wrap--court, .wrap--serre { padding-top: 96px; padding-bottom: 96px; }
+  .hero__contenu { padding-top: 200px; padding-bottom: 80px; }
+  .hero-page__contenu { padding-top: 196px; padding-bottom: 80px; }
+  .manifeste, .accompagnement { gap: 40px; }
+  .methode-page { gap: 40px; }
+  .manifeste__visuel { height: 420px; }
+  .accompagnement__visuel { min-height: 320px; }
+  .actus__grille { gap: 36px; }
+  .article--breve { grid-template-columns: 42% 1fr; gap: 18px; }
+  .article--breve .article__media { --h-bloc: 30px; --r-arrondi: 16px; }
+  .formulaire { padding: 40px; }
+  .carte { padding: 36px 32px; }
+  .pole { padding-right: 40px; }
+  .pole:last-child { padding-left: 40px; }
+  .methode__etapes { gap: 24px; }
+  .etape__texte { font-size: 14px; }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  :root {
+    --t-hero: 36px;
+    --t-hero-page: 32px;
+    --t-section: 28px;
+    --t-carte: 21px;
+    --marge-laterale: 24px;
+    --h-onglet: 44px;
+  }
+
+  .entete { --h-logo: 50px; }
+
+  .decroche { padding: 0 26px 4px; gap: 10px; font-size: 11px; }
+  .decroche__point { width: 6px; height: 6px; }
+
+  .wrap, .wrap--court, .wrap--serre { padding-top: 72px; padding-bottom: 72px; }
+
+  .hero { min-height: 520px; }
+  .hero__contenu { padding-top: 160px; padding-bottom: 64px; }
+  .hero__titre { margin-bottom: 32px; }
+  .hero-page__contenu { padding-top: 152px; padding-bottom: 64px; }
+  .hero-page__pont { height: 46%; }
+
+  .surtitre { font-size: 12px; }
+  .chapo { font-size: 20px; }
+  .texte { font-size: 17px; }
+
+  .manifeste,
+  .accompagnement,
+  .methode-page,
+  .grille-deux,
+  .actus__grille,
+  .poles__grille,
+  .champs-double { grid-template-columns: 1fr; }
+
+  .manifeste__phrase { font-size: 24px; }
+  .manifeste__visuel { height: 360px; }
+  .manifeste__vignette { left: auto; right: 16px; bottom: -28px; width: 130px; height: 130px; }
+  .accompagnement__visuel { min-height: 280px; }
+
+  .pole,
+  .pole:last-child { padding: 40px 0; }
+  .pole:first-child { border-right: 0; border-bottom: 1px solid var(--bord); }
+
+  .methode__titre { margin-bottom: 48px; }
+  .methode__etapes { grid-template-columns: 1fr; gap: 36px; margin-bottom: 48px; }
+  .methode__rail, .methode__progression { display: none; }
+  .etape__numero { width: 40px; height: 40px; margin-bottom: 16px; }
+
+  /* la brève repasse en pile : une image de 130 px de large ne laisse
+     pas la place à l'étiquette de thème */
+  .article--breve { grid-template-columns: 1fr; gap: 0; }
+  .article--breve .article__media { aspect-ratio: 16 / 9; --h-bloc: 40px; --r-arrondi: 20px; }
+  .article--breve .article__corps { padding-top: 18px; }
+  .actus__breves { gap: 36px; }
+  .actus__breves .article--breve + .article--breve { padding-top: 36px; }
+
+  .domaines__corps { grid-template-columns: 1fr; gap: 0; }
+  .domaines__rail { display: none; }
+  .domaines__liste { gap: 48px; }
+  .domaines__entete { margin-bottom: 56px; }
+
+  .transition-bloc { padding: 72px var(--marge-laterale); }
+
+  .formulaire { padding: 28px 22px; }
+  .article__corps { padding: 24px; }
+
+  .signature__inner { padding: 48px var(--marge-laterale); }
+  .signature__phrase { font-size: 20px; text-align: left; }
+
+  .pied__inner { padding: 56px var(--marge-laterale) 32px; }
+  .pied__haut { grid-template-columns: 1fr; gap: 40px; padding-bottom: 40px; }
+  .pied__bas { flex-direction: column; gap: 8px; }
+
+  .btn { font-size: 15px; padding-left: 22px; }
+}
