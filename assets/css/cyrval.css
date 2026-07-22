@@ -482,7 +482,12 @@ main > section { position: relative; }
 
 .entete {
   --pad-entete: 13px;   /* marge au-dessus et en dessous de la ligne */
-  --h-logo: 57px;       /* pilote la hauteur de la ligne, donc du bandeau */
+  /* Deux hauteurs distinctes depuis que le viewBox du logo est resserre.
+     Avant, le viewBox portait 44 % de vide et une seule variable faisait les
+     deux : la ligne etait haute, le dessin petit. Les separer permet de
+     grossir le dessin sans toucher a la hauteur du bandeau. */
+  --h-ligne: 57px;      /* hauteur de la ligne, pilote le bandeau */
+  --h-logo: 42px;       /* hauteur du dessin lui-meme */
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
@@ -504,6 +509,7 @@ main > section { position: relative; }
 .entete__logo {
   display: flex;
   align-items: center;
+  height: var(--h-ligne);   /* la ligne garde sa hauteur, le dessin s'y centre */
   flex-shrink: 0;
   color: var(--blanc);
   text-decoration: none;
@@ -514,7 +520,7 @@ main > section { position: relative; }
 .entete__logo svg {
   display: block;
   height: var(--h-logo);
-  width: calc(var(--h-logo) * 2.11);   /* rapport du logo d'origine */
+  width: calc(var(--h-logo) * 3.5522);   /* rapport exact du dessin, 532.44 / 149.89 */
 }
 
 /* État défilé */
@@ -532,7 +538,7 @@ main > section { position: relative; }
    du logo. Une seule formule pour les deux états : quand l'en-tête
    blanchit au défilement, l'onglet blanc s'y fond sans raccord visible. */
 .nav {
-  --h-bloc: calc(var(--pad-entete) * 2 + var(--h-logo));
+  --h-bloc: calc(var(--pad-entete) * 2 + var(--h-ligne));
   display: flex;
   align-items: center;
   gap: 26px;
@@ -1247,7 +1253,7 @@ main > section { position: relative; }
 }
 
 .signature__inner svg {
-  width: 130px; height: 61px;
+  width: 170px; height: 47.86px;
   color: var(--bleu);
   flex-shrink: 0;
 }
@@ -1282,9 +1288,9 @@ main > section { position: relative; }
    la hauteur de la boite ne sert qu'a loger ce vide. La marge basse est
    reduite d'autant pour que l'ecart sous le dessin ne bouge pas. */
 .pied__logo {
-  width: 210px; height: 99px;
+  width: 240px; height: 67.56px;
   color: var(--or);
-  margin-bottom: 21px;
+  margin-bottom: 32px;
   display: block;
 }
 
@@ -1354,9 +1360,11 @@ main > section { position: relative; }
    13. Responsive
    ============================================================= */
 
-/* Sous 1300 px, la navigation complète et ses congés ne tiennent plus
-   entre le logo et l'accès client : menu déplié */
-@media (max-width: 1300px) {
+/* Sous 1350 px, la navigation complète et ses congés ne tiennent plus
+   entre le logo et l'accès client : menu déplié. Seuil remonté de 1300 à
+   1350 quand le logo est passé de 113 à 149 px de large : la pastille
+   LinkedIn était repoussée hors champ juste au-dessus de l'ancien seuil. */
+@media (max-width: 1350px) {
   .nav { display: none; }
   .entete__actions { display: none; }
   .burger { display: flex; }
@@ -1404,7 +1412,7 @@ main > section { position: relative; }
     --h-onglet: 44px;
   }
 
-  .entete { --h-logo: 50px; }
+  .entete { --h-ligne: 50px; --h-logo: 37px; }
 
   .decroche { padding: 0 26px 4px; gap: 10px; font-size: 11px; }
   .decroche__point { width: 6px; height: 6px; }
