@@ -985,10 +985,13 @@ main > section { position: relative; }
   margin-bottom: 10px;
 }
 
+/* La gouttière porte tout l'écart entre les deux brèves, filet compris. Voir
+   le filet plus bas : le sortir du modèle de boîte est ce qui garantit que les
+   deux brèves ont exactement la même hauteur. */
 .actus__breves {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 60px;
   height: 100%;
 }
 
@@ -998,6 +1001,7 @@ main > section { position: relative; }
   gap: 24px;
   align-items: stretch;
   flex: 1;
+  position: relative;
 }
 
 /* Pas de proportion imposée : le visuel prend la hauteur de la brève, c'est ce
@@ -1016,17 +1020,28 @@ main > section { position: relative; }
 
 .article--breve .article__corps { align-self: center; }
 
+/* Le 1 px de padding haut compense le débord de l'étiquette, comme sur
+   l'article à la une : sans lui, le libellé remonte d'un demi-pixel. */
 .article--breve .decroche--coin {
-  padding: 0 17px 0 15px;
+  padding: 1px 17px 0 15px;
   font-size: 11px;
 }
 
 .article--breve .article__corps { padding-top: 0; }
 .article--breve .article__titre { font-size: 18px; }
 
-.actus__breves .article--breve + .article--breve {
+/* Le filet se trace au milieu de la gouttière, hors du flux. Il était posé en
+   border-top + padding-top sur la seconde brève : en box-sizing border-box et
+   avec flex:1, les deux brèves recevaient bien la même hauteur de boîte, mais
+   la seconde perdait 31 px de hauteur de contenu. Sa vignette, qui s'étire sur
+   la hauteur de la ligne, était donc 31 px plus courte que la première. */
+.actus__breves .article--breve + .article--breve::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -30px;
   border-top: 1px solid var(--bord);
-  padding-top: 30px;
 }
 
 /* ---------- 9. Sections Pôle Conseil ---------- */
@@ -1424,8 +1439,8 @@ main > section { position: relative; }
   .article--breve { grid-template-columns: 1fr; gap: 0; }
   .article--breve .article__media { aspect-ratio: 16 / 9; --h-bloc: 40px; --r-arrondi: 20px; }
   .article--breve .article__corps { padding-top: 18px; }
-  .actus__breves { gap: 36px; }
-  .actus__breves .article--breve + .article--breve { padding-top: 36px; }
+  .actus__breves { gap: 72px; }
+  .actus__breves .article--breve + .article--breve::before { top: -36px; }
 
   .domaines__corps { grid-template-columns: 1fr; gap: 0; }
   .domaines__rail { display: none; }
