@@ -1277,10 +1277,14 @@ main > section { position: relative; }
   border-bottom: 1px solid rgba(244, 234, 225, .18);
 }
 
+/* Agrandi pour que la baseline se lise. C'est la largeur qui commande :
+   le viewBox du logo porte 44 % de vide en hauteur, jamais en largeur, donc
+   la hauteur de la boite ne sert qu'a loger ce vide. La marge basse est
+   reduite d'autant pour que l'ecart sous le dessin ne bouge pas. */
 .pied__logo {
-  width: 140px; height: 66px;
+  width: 210px; height: 99px;
   color: var(--or);
-  margin-bottom: 28px;
+  margin-bottom: 21px;
   display: block;
 }
 
