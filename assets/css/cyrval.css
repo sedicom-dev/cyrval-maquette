@@ -304,6 +304,11 @@ main > section { position: relative; }
   position: absolute;
   top: -1px;
   left: -1px;
+  /* .decroche centre l'onglet sur la page avec left:50% + translateX(-50%).
+     La variante d'angle se cale sur le coin de l'image : sans cette remise à
+     zéro, le translate subsiste et sort l'étiquette d'une demi-largeur hors
+     du visuel, vers la gauche. */
+  transform: none;
   z-index: 2;
   height: calc(var(--h-bloc) + 1px);
   padding: 1px 24px 0 23px;
