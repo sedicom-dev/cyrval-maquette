@@ -1272,7 +1272,7 @@ main > section { position: relative; }
 }
 
 .signature__inner svg {
-  width: 170px; height: 47.86px;
+  width: 240px; height: 67.56px;
   color: var(--bleu);
   flex-shrink: 0;
 }
