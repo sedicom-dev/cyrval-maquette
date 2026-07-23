@@ -9,11 +9,11 @@
 /* ---------- 1. Police ---------- */
 
 @font-face {
-  font-family: 'Inter';
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url('../fonts/inter-latin-var.woff2') format('woff2');
+  src: url('../fonts/roboto-latin-var.woff2') format('woff2');
 }
 
 /* ---------- 2. Tokens ---------- */
@@ -35,7 +35,7 @@
   --fond: #F7F9FA;
 
   /* Typographie */
-  --font: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --t-hero: 56px;
   --t-hero-page: 44px;
   --t-section: 40px;
@@ -486,8 +486,8 @@ main > section { position: relative; }
      Avant, le viewBox portait 44 % de vide et une seule variable faisait les
      deux : la ligne etait haute, le dessin petit. Les separer permet de
      grossir le dessin sans toucher a la hauteur du bandeau. */
-  --h-ligne: 57px;      /* hauteur de la ligne, pilote le bandeau */
-  --h-logo: 42px;       /* hauteur du dessin lui-meme */
+  --h-ligne: 66px;      /* hauteur de la ligne, pilote le bandeau */
+  --h-logo: 58px;       /* hauteur du dessin lui-meme */
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
