@@ -8,12 +8,31 @@
 
 /* ---------- 1. Police ---------- */
 
+/* Lato n'existe qu'en graisses discretes : 400, 700 et 900 couvrent la
+   maquette. Les 500 (medium) rendus par le navigateur retombent sur le 400,
+   les 600 (semibold) sur le 700. Le 900 (black) est reserve aux capitales. */
 @font-face {
-  font-family: 'Roboto';
+  font-family: 'Lato';
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 400;
   font-display: swap;
-  src: url('../fonts/roboto-latin-var.woff2') format('woff2');
+  src: url('../fonts/lato-latin-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/lato-latin-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../fonts/lato-latin-900.woff2') format('woff2');
 }
 
 /* ---------- 2. Tokens ---------- */
@@ -35,7 +54,7 @@
   --fond: #F7F9FA;
 
   /* Typographie */
-  --font: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --t-hero: 56px;
   --t-hero-page: 44px;
   --t-section: 40px;
@@ -105,7 +124,7 @@ main > section { position: relative; }
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
-  font: 600 13px/1.2 var(--font);
+  font: 900 13px/1.2 var(--font);
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--gris);
@@ -272,7 +291,7 @@ main > section { position: relative; }
   padding: 0 38px 6px;
   margin: 0;
   background: var(--precedent);
-  font: 600 13px/1 var(--font);
+  font: 900 13px/1 var(--font);
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--gris);
@@ -556,7 +575,7 @@ main > section { position: relative; }
    apparaît sans décaler la navigation. */
 .nav a {
   position: relative;
-  font: 600 12px/1 var(--font);
+  font: 900 12px/1 var(--font);
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--encre);
@@ -596,7 +615,7 @@ main > section { position: relative; }
    il n'y a plus rien à flouter derrière, et il coûterait une couche de
    composition pour rien. */
 .lien-acces {
-  font: 600 12px/1 var(--font);
+  font: 900 12px/1 var(--font);
   letter-spacing: .08em;
   text-transform: uppercase;
   text-decoration: none;
@@ -885,7 +904,7 @@ main > section { position: relative; }
 .pole:last-child { padding: 56px 0 56px 64px; }
 
 .pole__label {
-  font: 600 13px/1.2 var(--font);
+  font: 900 13px/1.2 var(--font);
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--gris);
@@ -1188,7 +1207,7 @@ main > section { position: relative; }
 
 .champ__label,
 .formulaire__legende {
-  font: 600 13px/1.2 var(--font);
+  font: 900 13px/1.2 var(--font);
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--gris);
@@ -1300,7 +1319,7 @@ main > section { position: relative; }
 }
 
 .pied__titre {
-  font: 600 13px/1.2 var(--font);
+  font: 900 13px/1.2 var(--font);
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--or);
