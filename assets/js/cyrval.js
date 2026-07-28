@@ -74,6 +74,17 @@
     });
   }
 
+  /* ---------- Accordéons ---------- */
+
+  document.querySelectorAll('.accordeon__tete').forEach(function (tete) {
+    tete.addEventListener('click', function () {
+      var item = tete.closest('.accordeon__item');
+      if (!item) return;
+      var ouvert = item.classList.toggle('est-ouvert');
+      tete.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+    });
+  });
+
   /* ---------- 3. Apparitions au défilement ---------- */
 
   var blocs = document.querySelectorAll('[data-reveal]');
