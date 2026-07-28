@@ -1490,6 +1490,8 @@ main > section { position: relative; }
 
 .pied__bas a:hover { color: var(--sable); }
 
+.pied__legal { display: flex; gap: 22px; flex-wrap: wrap; }
+
 /* =============================================================
    13. Actualités : liste (archive) et article (single)
    ============================================================= */
