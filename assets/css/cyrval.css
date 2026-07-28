@@ -886,6 +886,12 @@ main > section { position: relative; }
   margin: 0 auto;
 }
 
+.grille-trois {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
 /* 8.3 Les deux pôles */
 
 .poles {
@@ -1376,7 +1382,224 @@ main > section { position: relative; }
 .pied__bas a:hover { color: var(--sable); }
 
 /* =============================================================
-   13. Responsive
+   13. Actualités : liste (archive) et article (single)
+   ============================================================= */
+
+/* 13.1 Filtres par thème */
+
+.filtres {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 56px;
+}
+
+.chip {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--bord);
+  background: var(--blanc);
+  font: 900 12px/1 var(--font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gris);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.chip:hover { border-color: var(--bleu); color: var(--bleu); }
+.chip.est-active { background: var(--bleu); border-color: var(--bleu); color: var(--blanc); }
+
+/* 13.2 Grille d'archive : des articles de taille égale, trois par ligne.
+   Même composant .article que l'accueil, mais le visuel prend un rapport
+   fixe pour que toutes les cartes s'alignent. */
+
+.actus-grille {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 56px 40px;
+}
+
+.actus-grille .article__media { aspect-ratio: 3 / 2; }
+.actus-grille .article__corps { padding-top: 22px; }
+
+/* 13.3 Pagination */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 72px;
+}
+
+.pagination a,
+.pagination span {
+  min-width: 42px;
+  height: 42px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font: 600 15px/1 var(--font);
+  text-decoration: none;
+  color: var(--gris);
+  border: 1px solid transparent;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.pagination a:hover { color: var(--bleu); border-color: var(--bord); }
+.pagination .est-active { background: var(--bleu); color: var(--blanc); }
+.pagination .pagination__fleche { color: var(--bleu); }
+.pagination .est-desactive { color: var(--gris-clair); pointer-events: none; }
+
+/* 13.4 En-tête d'article : le hero bleu porte le thème, la date et la durée */
+
+.hero-page__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+  font: 400 14px/1.5 var(--font);
+  color: var(--clair-sur-fonce);
+}
+
+.hero-page__meta .puce-theme {
+  font: 900 12px/1 var(--font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--bleu);
+  background: var(--sable);
+  padding: 8px 14px;
+  border-radius: 999px;
+}
+
+.hero-page__meta .sep { opacity: .45; }
+
+/* 13.5 Corps d'article : une colonne lisible, centrée */
+
+.retour-actus {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 44px;
+  font: 900 12px/1 var(--font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gris);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.retour-actus:hover { color: var(--bleu); }
+
+.article-colonne {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.corps-article {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.corps-article > * + * { margin-top: 28px; }
+
+.corps-article .chapo {
+  max-width: none;
+  color: var(--bleu);
+}
+
+.corps-article p {
+  font: 400 18px/1.75 var(--font);
+  color: var(--encre);
+}
+
+.corps-article h2 {
+  font: 600 26px/1.35 var(--font);
+  color: var(--bleu);
+  margin-top: 12px;
+}
+
+.corps-article ul {
+  margin: 0;
+  padding-left: 24px;
+}
+
+.corps-article li {
+  font: 400 18px/1.75 var(--font);
+  color: var(--encre);
+}
+
+.corps-article li + li { margin-top: 8px; }
+
+.corps-article li::marker { color: var(--or); }
+
+.corps-article blockquote {
+  margin: 8px 0;
+  padding-left: 28px;
+  border-left: 3px solid var(--or);
+  font: 400 24px/1.5 var(--font);
+  color: var(--bleu);
+}
+
+.corps-article figure { margin: 8px 0; }
+
+.corps-article figure img {
+  display: block;
+  width: 100%;
+  border-radius: var(--r-arrondi);
+}
+
+.corps-article figcaption {
+  margin-top: 12px;
+  font: 400 14px/1.6 var(--font);
+  color: var(--gris);
+  text-align: center;
+}
+
+/* Partage, en bas de l'article */
+.partage {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 760px;
+  margin: 56px auto 0;
+  padding-top: 32px;
+  border-top: 1px solid var(--bord);
+}
+
+.partage__label {
+  font: 900 12px/1 var(--font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gris);
+}
+
+.partage__liens { display: flex; gap: 10px; }
+
+.partage__liens a {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 13px/1 var(--font);
+  text-decoration: none;
+  color: var(--bleu);
+  background: var(--fond);
+  border: 1px solid var(--bord);
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.partage__liens a:hover { background: var(--bleu); color: var(--blanc); border-color: var(--bleu); }
+
+/* =============================================================
+   14. Responsive
    ============================================================= */
 
 /* Sous 1350 px, la navigation complète et ses congés ne tiennent plus
@@ -1414,6 +1637,7 @@ main > section { position: relative; }
   .article--breve .article__media { --h-bloc: 30px; --r-arrondi: 16px; }
   .formulaire { padding: 40px; }
   .carte { padding: 36px 32px; }
+  .actus-grille { grid-template-columns: repeat(2, 1fr); gap: 40px 32px; }
   .pole { padding-right: 40px; }
   .pole:last-child { padding-left: 40px; }
   .methode__etapes { gap: 24px; }
@@ -1452,6 +1676,7 @@ main > section { position: relative; }
   .accompagnement,
   .methode-page,
   .grille-deux,
+  .grille-trois,
   .actus__grille,
   .poles__grille,
   .champs-double { grid-template-columns: 1fr; }
@@ -1487,6 +1712,14 @@ main > section { position: relative; }
 
   .formulaire { padding: 28px 22px; }
   .article__corps { padding: 24px; }
+
+  .actus-grille { grid-template-columns: 1fr; gap: 48px; }
+  .actus-grille .article__corps { padding: 18px 0 0; }
+  .filtres { margin-bottom: 40px; }
+  .pagination { margin-top: 48px; }
+  .corps-article h2 { font-size: 22px; }
+  .corps-article blockquote { font-size: 20px; padding-left: 20px; }
+  .partage { flex-direction: column; align-items: flex-start; gap: 14px; }
 
   .signature__inner { padding: 48px var(--marge-laterale); }
   .signature__phrase { font-size: 20px; text-align: left; }
