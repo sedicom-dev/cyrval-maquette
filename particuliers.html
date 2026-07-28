@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>CYRVAL — Notre cabinet</title>
-<meta name="description" content="CYRVAL, cabinet de conseil en gestion de patrimoine à Nîmes depuis 1993. Deux entités, Cyrval Consultant et Cyrval Patrimoine, au service des particuliers et des dirigeants.">
+<title>CYRVAL — Particuliers</title>
+<meta name="description" content="CYRVAL accompagne les particuliers à chaque étape de vie : construire, protéger, développer et transmettre son patrimoine.">
 <link rel="stylesheet" href="assets/css/cyrval.css">
 <script>document.documentElement.className = 'js';</script>
 </head>
@@ -70,15 +70,34 @@
 
     <nav class="nav" aria-label="Navigation principale">
       <a href="index.html">Accueil</a>
-      <a class="est-active" href="cabinet.html" aria-current="page">Cyrval</a>
-      <a href="pole-conseil.html">Nos expertises</a>
-      <a href="#besoins">Vos besoins</a>
+      <div class="nav-groupe">
+        <button class="nav-groupe__label" type="button" aria-haspopup="true" aria-expanded="false">Notre cabinet</button>
+        <div class="nav-groupe__menu">
+          <a href="notre-histoire.html">Notre histoire</a>
+          <a href="notre-equipe.html">Notre équipe</a>
+          <a href="notre-methode.html">Notre méthode</a>
+        </div>
+      </div>
+      <div class="nav-groupe">
+        <button class="nav-groupe__label" type="button" aria-haspopup="true" aria-expanded="false">Nos expertises</button>
+        <div class="nav-groupe__menu">
+          <a href="pole-conseil.html">Pôle Conseil</a>
+          <a href="pole-gestion.html">Pôle Gestion</a>
+        </div>
+      </div>
+      <div class="nav-groupe">
+        <button class="nav-groupe__label est-active" type="button" aria-haspopup="true" aria-expanded="false">Vos besoins</button>
+        <div class="nav-groupe__menu">
+          <a class="est-active" href="particuliers.html">Particuliers</a>
+          <a href="dirigeants.html">Dirigeants</a>
+        </div>
+      </div>
       <a href="actualites.html">Actualités et conseils</a>
       <a href="#contact">Contact</a>
     </nav>
 
     <div class="entete__actions">
-      <a class="lien-acces" href="#">Accès client ↗</a>
+      <a class="lien-acces" href="acces-client.html">Accès client ↗</a>
       <a class="lien-linkedin" href="#" aria-label="CYRVAL sur LinkedIn">in</a>
     </div>
 
@@ -90,13 +109,20 @@
   <div class="menu-mobile">
     <div class="menu-mobile__inner">
       <a href="index.html">Accueil</a>
-      <a class="est-active" href="cabinet.html">Cyrval</a>
-      <a href="pole-conseil.html">Nos expertises</a>
-      <a href="#besoins">Vos besoins</a>
+      <p class="menu-mobile__rubrique">Notre cabinet</p>
+      <a class="menu-mobile__sous" href="notre-histoire.html">Notre histoire</a>
+      <a class="menu-mobile__sous" href="notre-equipe.html">Notre équipe</a>
+      <a class="menu-mobile__sous" href="notre-methode.html">Notre méthode</a>
+      <p class="menu-mobile__rubrique">Nos expertises</p>
+      <a class="menu-mobile__sous" href="pole-conseil.html">Pôle Conseil</a>
+      <a class="menu-mobile__sous" href="pole-gestion.html">Pôle Gestion</a>
+      <p class="menu-mobile__rubrique">Vos besoins</p>
+      <a class="menu-mobile__sous est-active" href="particuliers.html">Particuliers</a>
+      <a class="menu-mobile__sous" href="dirigeants.html">Dirigeants</a>
       <a href="actualites.html">Actualités et conseils</a>
       <a href="#contact">Contact</a>
       <div class="menu-mobile__pied">
-        <a class="lien-acces" href="#">Accès client ↗</a>
+        <a class="lien-acces" href="acces-client.html">Accès client ↗</a>
         <a class="lien-linkedin" href="#" aria-label="CYRVAL sur LinkedIn">in</a>
       </div>
     </div>
@@ -105,120 +131,88 @@
 
 <main>
 
-  <!-- 1. Hero de page -->
+  <!-- 1. Hero -->
   <section class="hero-page reveal" data-reveal>
     <div class="hero-page__contenu">
-      <p class="surtitre surtitre--trait surtitre--clair">Notre cabinet</p>
-      <h1 class="hero-page__titre">Un accompagnement patrimonial <span class="souligne-or">sur mesure</span>.</h1>
+      <p class="surtitre surtitre--trait surtitre--clair">Vos besoins — Pour les particuliers</p>
+      <h1 class="hero-page__titre">Chaque étape de vie mérite une stratégie patrimoniale <span class="souligne-or">adaptée</span>.</h1>
     </div>
   </section>
 
-  <!-- 2. Présentation -->
+  <!-- 2. Où en êtes-vous aujourd'hui ? -->
   <section class="section--blanc" style="--precedent: var(--bleu);">
-    <p class="decroche decroche--clair"><span class="decroche__point"></span>Qui sommes-nous</p>
-    <div class="wrap accompagnement reveal" data-reveal>
-      <div class="accompagnement__texte">
-        <h2 class="titre-section">Un cabinet au service de votre patrimoine</h2>
-        <p class="texte">Notre cabinet accompagne les particuliers, les familles et les dirigeants dans l'organisation, la valorisation et la transmission de leur patrimoine. L'accompagnement repose sur l'écoute et sur une lecture attentive de chaque situation, afin d'apporter des réponses claires, adaptées et pensées pour le long terme.</p>
-        <p class="texte">Chaque projet fait l'objet d'un suivi personnalisé, dans une relation de proximité entretenue dans la durée. Les recommandations s'appuient sur une analyse d'ensemble et sont réexaminées régulièrement, au fil des évolutions de votre situation comme de votre environnement.</p>
-      </div>
-      <div class="accompagnement__visuel">
-        <div class="media media--biseau">
-          <img src="assets/img/bureaux-cyrval.jpg" alt="Sujet à définir par le client">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. Notre histoire -->
-  <section class="section--fond" style="--precedent: var(--blanc);">
-    <p class="decroche"><span class="decroche__point"></span>Notre histoire</p>
-    <div class="wrap methode-page reveal" data-reveal>
-      <div class="methode-page__titre">
-        <h2 class="titre-section">Une histoire, des convictions</h2>
-        <div class="filet-or"></div>
-      </div>
-      <p class="texte">Cet espace accueillera le récit du cabinet et les convictions qui guident son travail au quotidien. Le texte définitif, rédigé avec le client, présentera son parcours, sa manière d'aborder chaque mission et la relation qu'il entretient avec ceux qu'il accompagne. Ce paragraphe provisoire permet d'apprécier le rythme de lecture et l'équilibre de la mise en page.</p>
-    </div>
-  </section>
-
-  <!-- 4. Les deux entités -->
-  <section class="section--bleu" style="--precedent: var(--fond);">
-    <p class="decroche"><span class="decroche__point"></span>Nos entités</p>
-    <div class="wrap reveal" data-reveal>
-      <div class="entete-bloc">
-        <h2 class="titre-section titre-section--clair">Deux entités complémentaires</h2>
-        <p class="chapo chapo--clair">Ce court texte d'introduction présentera l'organisation du cabinet et le rôle de chacune de ses entités.</p>
+    <p class="decroche decroche--clair"><span class="decroche__point"></span>Vos besoins</p>
+    <div class="wrap--court wrap">
+      <div class="entete-bloc reveal" data-reveal>
+        <h2 class="titre-section">Où en êtes-vous aujourd'hui ?</h2>
+        <p class="chapo">Que vous débutiez la constitution de votre patrimoine, prépariez votre retraite ou souhaitiez transmettre à vos proches, nous vous accompagnons dans les décisions qui comptent.</p>
       </div>
       <div class="grille-deux reveal" data-reveal>
         <article class="carte">
-          <h3 class="carte__titre">Cyrval Consultant</h3>
+          <h3 class="carte__titre">Construire</h3>
           <div class="filet-or"></div>
-          <p class="carte__texte">Description de l'entité à compléter avec le client. Ce texte provisoire présente son rôle et son périmètre d'intervention, dans l'attente du contenu définitif.</p>
+          <p class="carte__texte">Premier investissement, épargne, acquisition immobilière.</p>
         </article>
         <article class="carte">
-          <h3 class="carte__titre">Cyrval Patrimoine</h3>
+          <h3 class="carte__titre">Protéger</h3>
           <div class="filet-or"></div>
-          <p class="carte__texte">Description de l'entité à compléter avec le client. Ce texte provisoire présente son rôle et son périmètre d'intervention, dans l'attente du contenu définitif.</p>
+          <p class="carte__texte">Famille, revenus, fiscalité, prévoyance.</p>
+        </article>
+        <article class="carte">
+          <h3 class="carte__titre">Développer</h3>
+          <div class="filet-or"></div>
+          <p class="carte__texte">Valoriser et diversifier son patrimoine.</p>
+        </article>
+        <article class="carte">
+          <h3 class="carte__titre">Transmettre</h3>
+          <div class="filet-or"></div>
+          <p class="carte__texte">Préparer l'avenir de ses proches.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- 5. Nos valeurs -->
-  <section class="section--sable" style="--precedent: var(--bleu);">
-    <p class="decroche decroche--clair"><span class="decroche__point"></span>Nos valeurs</p>
-    <div class="wrap--court wrap">
-      <div class="entete-bloc reveal" data-reveal>
-        <h2 class="titre-section">Ce qui nous anime</h2>
+  <!-- 3. Des solutions adaptées -->
+  <section class="section--fond" style="--precedent: var(--blanc);">
+    <p class="decroche"><span class="decroche__point"></span>Nos accompagnements</p>
+    <div class="wrap--court wrap reveal" data-reveal>
+      <div class="entete-bloc">
+        <h2 class="titre-section">Des solutions adaptées à vos objectifs</h2>
+        <p class="chapo" style="margin-left: auto; margin-right: auto;">Nos principaux accompagnements couvrent l'ensemble de vos besoins patrimoniaux. La liste détaillée sera précisée avec le client : investissement immobilier, épargne, préparation de la retraite, transmission…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Pourquoi se faire accompagner ? -->
+  <section class="section--bleu" style="--precedent: var(--fond);">
+    <p class="decroche"><span class="decroche__point"></span>Pourquoi nous</p>
+    <div class="wrap reveal" data-reveal>
+      <div class="entete-bloc">
+        <h2 class="titre-section titre-section--clair">Prendre les bonnes décisions au bon moment</h2>
       </div>
       <div class="grille-trois reveal" data-reveal>
         <article class="carte">
-          <h3 class="carte__titre">Première valeur</h3>
+          <h3 class="carte__titre">Gagner en visibilité</h3>
           <div class="filet-or"></div>
-          <p class="carte__texte">Intitulé et description à définir avec le client. Ce texte provisoire tient lieu de repère de longueur pour la mise en page.</p>
+          <p class="carte__texte">Comprendre clairement sa situation patrimoniale.</p>
         </article>
         <article class="carte">
-          <h3 class="carte__titre">Deuxième valeur</h3>
+          <h3 class="carte__titre">Faire les bons choix</h3>
           <div class="filet-or"></div>
-          <p class="carte__texte">Intitulé et description à définir avec le client. Ce texte provisoire tient lieu de repère de longueur pour la mise en page.</p>
+          <p class="carte__texte">Construire une stratégie cohérente avec ses objectifs.</p>
         </article>
         <article class="carte">
-          <h3 class="carte__titre">Troisième valeur</h3>
+          <h3 class="carte__titre">Anticiper l'avenir</h3>
           <div class="filet-or"></div>
-          <p class="carte__texte">Intitulé et description à définir avec le client. Ce texte provisoire tient lieu de repère de longueur pour la mise en page.</p>
+          <p class="carte__texte">Préparer sereinement les grandes étapes de vie.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- 6. Vos besoins -->
-  <section id="besoins" class="section--blanc" style="--precedent: var(--sable);">
-    <p class="decroche"><span class="decroche__point"></span>Vos besoins</p>
-    <div class="wrap--court wrap">
-      <div class="entete-bloc reveal" data-reveal>
-        <h2 class="titre-section">Nous accompagnons</h2>
-      </div>
-      <div class="grille-deux reveal" data-reveal>
-        <article class="carte">
-          <h3 class="carte__titre">Les particuliers</h3>
-          <div class="filet-or"></div>
-          <p class="carte__texte">Construire, protéger, développer et transmettre votre patrimoine.</p>
-          <a class="btn btn--secondaire" href="#">En savoir plus<span class="btn__fleche" aria-hidden="true">→</span></a>
-        </article>
-        <article class="carte">
-          <h3 class="carte__titre">Les dirigeants</h3>
-          <div class="filet-or"></div>
-          <p class="carte__texte">Structurer votre patrimoine privé et professionnel.</p>
-          <a class="btn btn--secondaire" href="#">En savoir plus<span class="btn__fleche" aria-hidden="true">→</span></a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7. Nous contacter -->
-  <section id="contact" class="section--sable" style="--precedent: var(--blanc);">
-    <p class="decroche"><span class="decroche__point"></span>Contact</p>
+  <!-- 5. Nous contacter -->
+  <section id="contact" class="section--sable" style="--precedent: var(--bleu);">
+    <p class="decroche decroche--clair"><span class="decroche__point"></span>Contact</p>
     <div class="wrap--court wrap reveal" data-reveal>
       <div class="entete-bloc">
         <h2 class="titre-section">Nous contacter</h2>
@@ -251,7 +245,7 @@
     </div>
   </section>
 
-  <!-- 8. Signature -->
+  <!-- 6. Signature -->
   <section class="signature">
     <div class="signature__inner reveal" data-reveal>
       <svg viewBox="0 0 532.44 149.89" aria-hidden="true"><use href="#logo-cyrval"></use></svg>
@@ -273,10 +267,11 @@
         <p class="pied__titre">Menu</p>
         <nav class="pied__liens" aria-label="Navigation de pied de page">
           <a href="index.html">Accueil</a>
-          <a href="cabinet.html">Cyrval</a>
+          <a href="notre-histoire.html">Notre cabinet</a>
           <a href="pole-conseil.html">Nos expertises</a>
-          <a href="#besoins">Vos besoins</a>
+          <a href="particuliers.html">Vos besoins</a>
           <a href="actualites.html">Actualités et conseils</a>
+          <a href="acces-client.html">Accès client</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>CYRVAL — Pôle Conseil</title>
-<meta name="description" content="Le pôle Conseil de CYRVAL : ingénierie patrimoniale, analyse juridique et fiscale, sélection de structures et de produits financiers, suivi dans la durée.">
+<meta name="description" content="Le pôle Conseil de CYRVAL : ingénierie patrimoniale, analyse juridique et fiscale, sélection de solutions et suivi dans la durée.">
 <link rel="stylesheet" href="assets/css/cyrval.css">
 <script>document.documentElement.className = 'js';</script>
 </head>
@@ -70,15 +70,34 @@
 
     <nav class="nav" aria-label="Navigation principale">
       <a href="index.html">Accueil</a>
-      <a href="cabinet.html">Cyrval</a>
-      <a class="est-active" href="pole-conseil.html" aria-current="page">Nos expertises</a>
-      <a href="#besoins">Vos besoins</a>
+      <div class="nav-groupe">
+        <button class="nav-groupe__label" type="button" aria-haspopup="true" aria-expanded="false">Notre cabinet</button>
+        <div class="nav-groupe__menu">
+          <a href="notre-histoire.html">Notre histoire</a>
+          <a href="notre-equipe.html">Notre équipe</a>
+          <a href="notre-methode.html">Notre méthode</a>
+        </div>
+      </div>
+      <div class="nav-groupe">
+        <button class="nav-groupe__label est-active" type="button" aria-haspopup="true" aria-expanded="false">Nos expertises</button>
+        <div class="nav-groupe__menu">
+          <a class="est-active" href="pole-conseil.html">Pôle Conseil</a>
+          <a href="pole-gestion.html">Pôle Gestion</a>
+        </div>
+      </div>
+      <div class="nav-groupe">
+        <button class="nav-groupe__label" type="button" aria-haspopup="true" aria-expanded="false">Vos besoins</button>
+        <div class="nav-groupe__menu">
+          <a href="particuliers.html">Particuliers</a>
+          <a href="dirigeants.html">Dirigeants</a>
+        </div>
+      </div>
       <a href="actualites.html">Actualités et conseils</a>
       <a href="#contact">Contact</a>
     </nav>
 
     <div class="entete__actions">
-      <a class="lien-acces" href="#">Accès client ↗</a>
+      <a class="lien-acces" href="acces-client.html">Accès client ↗</a>
       <a class="lien-linkedin" href="#" aria-label="CYRVAL sur LinkedIn">in</a>
     </div>
 
@@ -90,13 +109,20 @@
   <div class="menu-mobile">
     <div class="menu-mobile__inner">
       <a href="index.html">Accueil</a>
-      <a href="cabinet.html">Cyrval</a>
-      <a class="est-active" href="pole-conseil.html">Nos expertises</a>
-      <a href="#besoins">Vos besoins</a>
+      <p class="menu-mobile__rubrique">Notre cabinet</p>
+      <a class="menu-mobile__sous" href="notre-histoire.html">Notre histoire</a>
+      <a class="menu-mobile__sous" href="notre-equipe.html">Notre équipe</a>
+      <a class="menu-mobile__sous" href="notre-methode.html">Notre méthode</a>
+      <p class="menu-mobile__rubrique">Nos expertises</p>
+      <a class="menu-mobile__sous est-active" href="pole-conseil.html">Pôle Conseil</a>
+      <a class="menu-mobile__sous" href="pole-gestion.html">Pôle Gestion</a>
+      <p class="menu-mobile__rubrique">Vos besoins</p>
+      <a class="menu-mobile__sous" href="particuliers.html">Particuliers</a>
+      <a class="menu-mobile__sous" href="dirigeants.html">Dirigeants</a>
       <a href="actualites.html">Actualités et conseils</a>
       <a href="#contact">Contact</a>
       <div class="menu-mobile__pied">
-        <a class="lien-acces" href="#">Accès client ↗</a>
+        <a class="lien-acces" href="acces-client.html">Accès client ↗</a>
         <a class="lien-linkedin" href="#" aria-label="CYRVAL sur LinkedIn">in</a>
       </div>
     </div>
@@ -105,7 +131,7 @@
 
 <main>
 
-  <!-- 1. Hero de page -->
+  <!-- 1. Hero -->
   <section class="hero-page reveal" data-reveal>
     <div class="hero-page__contenu">
       <p class="surtitre surtitre--trait surtitre--clair">Nos expertises — Pôle Conseil</p>
@@ -115,15 +141,15 @@
 
   <!-- 2. Notre accompagnement -->
   <section class="section--blanc" style="--precedent: var(--bleu);">
-    <p class="decroche decroche--clair"><span class="decroche__point"></span>Notre accompagnement</p>
+    <p class="decroche decroche--clair"><span class="decroche__point"></span>Le pôle Conseil</p>
     <div class="wrap accompagnement reveal" data-reveal>
       <div class="accompagnement__texte">
         <h2 class="titre-section">Notre accompagnement</h2>
-        <p class="texte">Sa vocation consiste à analyser vos patrimoines et les suivre dans le temps afin de vérifier constamment la corrélation de votre constitution patrimoniale avec les objectifs que vous avez déterminés.</p>
+        <p class="texte">Le pôle Conseil constitue le cœur de l'ingénierie patrimoniale de CYRVAL. Notre approche repose sur une vision globale et transversale du patrimoine : nous n'isolons jamais un investissement, une problématique fiscale ou une opération juridique du reste de votre situation, mais nous les analysons dans leur interaction avec l'ensemble de vos actifs, de votre structuration familiale et professionnelle, et de vos objectifs de long terme.</p>
       </div>
       <div class="accompagnement__visuel">
-        <div class="media media--biseau">
-          <img src="assets/img/equipe-cyrval.jpg" alt="Sujet à définir par le client">
+        <div class="media media--biseau media--vide">
+          <p class="media__legende">Photo à définir</p>
         </div>
       </div>
     </div>
@@ -134,10 +160,10 @@
     <p class="decroche"><span class="decroche__point"></span>Notre méthode</p>
     <div class="wrap methode-page reveal" data-reveal>
       <div class="methode-page__titre">
-        <h2 class="titre-section">Notre méthode de travail</h2>
+        <h2 class="titre-section">L'audit patrimonial, point de départ de chaque mission</h2>
         <div class="filet-or"></div>
       </div>
-      <p class="texte">Cette section décrira la méthode de travail du pôle et les étapes clés de chaque mission. Ce texte de substitution donne un aperçu du volume attendu et sera remplacé par le contenu définitif, précisé avec le client. Il permet, dès à présent, de valider la structure et l'équilibre de cette partie de la page.</p>
+      <p class="texte">Chaque mission débute par un audit patrimonial approfondi : recensement exhaustif de vos actifs (immobiliers, financiers, professionnels), analyse de votre situation civile, matrimoniale et successorale, étude de votre fiscalité personnelle et, le cas échéant, de celle de votre entreprise. Cette photographie initiale nous permet d'identifier les zones de risque, les inefficiences fiscales et les leviers d'optimisation propres à votre situation.</p>
     </div>
   </section>
 
@@ -146,7 +172,7 @@
     <p class="decroche"><span class="decroche__point"></span>Nos domaines d'intervention</p>
     <div class="wrap reveal" data-reveal>
       <div class="domaines__entete">
-        <p class="chapo chapo--clair" style="margin: 0 auto;">Ce texte d'introduction présentera les différents domaines d'intervention du pôle, dont les intitulés seront définis avec le client.</p>
+        <p class="chapo chapo--clair" style="margin: 0 auto;">Sur cette base, nous élaborons des préconisations sur mesure, articulées autour de trois expertises complémentaires :</p>
       </div>
       <div class="domaines__corps" data-sequence="verticale">
         <div class="domaines__rail">
@@ -155,60 +181,36 @@
         <div class="domaines__liste">
           <article class="domaine" data-etape>
             <p class="domaine__numero">01</p>
-            <h3 class="domaine__titre">Premier domaine d'intervention</h3>
-            <p class="texte texte--doux domaine__texte">Intitulé et description à définir avec le client. Ce texte provisoire présente un domaine d'intervention du pôle et sert de repère de longueur pour la mise en page, dans l'attente du contenu définitif.</p>
+            <h3 class="domaine__titre">L'analyse juridique</h3>
+            <p class="texte texte--doux domaine__texte">Organisation du patrimoine, régimes matrimoniaux, structuration sociétaire (SCI, holding), pactes d'associés, préparation et anticipation des transmissions (donations, démembrement de propriété, assurance-vie, pacte Dutreil).</p>
           </article>
           <article class="domaine" data-etape>
             <p class="domaine__numero">02</p>
-            <h3 class="domaine__titre">Deuxième domaine d'intervention</h3>
-            <p class="texte texte--doux domaine__texte">Intitulé et description à définir avec le client. Ce texte provisoire présente un domaine d'intervention du pôle et sert de repère de longueur pour la mise en page, dans l'attente du contenu définitif.</p>
+            <h3 class="domaine__titre">L'analyse fiscale</h3>
+            <p class="texte texte--doux domaine__texte">Optimisation de l'impôt sur le revenu et de l'IFI, arbitrages entre enveloppes fiscales, stratégies de transmission à moindre coût fiscal, accompagnement dans vos déclarations et vos choix d'options fiscales.</p>
           </article>
           <article class="domaine" data-etape>
             <p class="domaine__numero">03</p>
-            <h3 class="domaine__titre">Troisième domaine d'intervention</h3>
-            <p class="texte texte--doux domaine__texte">Intitulé et description à définir avec le client. Ce texte provisoire présente un domaine d'intervention du pôle et sert de repère de longueur pour la mise en page, dans l'attente du contenu définitif.</p>
+            <h3 class="domaine__titre">La recherche de structures et de produits financiers</h3>
+            <p class="texte texte--doux domaine__texte">La sélection en architecture ouverte des supports (contrats d'assurance-vie et de capitalisation, SCPI, private equity, fonds structurés, solutions de défiscalisation) les mieux adaptés à votre profil de risque, votre horizon de placement et vos objectifs patrimoniaux.</p>
           </article>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 4. Donner vie à votre stratégie patrimoniale -->
+  <!-- 5. Suivi dans la durée -->
   <section class="section--sable" style="--precedent: var(--bleu);">
     <p class="decroche decroche--clair"><span class="decroche__point"></span>Suivi dans la durée</p>
     <div class="transition-bloc reveal" data-reveal>
-      <p class="texte">Ce texte reliera le pôle Conseil au pôle Gestion et rappellera la complémentarité des deux expertises. Le contenu définitif, rédigé avec le client, viendra remplacer ce paragraphe provisoire, qui sert ici de repère de longueur et invite le lecteur à poursuivre sa visite vers le pôle Gestion.</p>
-      <h2 class="titre-section">Découvrir le pôle Gestion</h2>
+      <p class="texte">Le pôle Conseil ne s'arrête pas à la préconisation initiale, il assure un suivi patrimonial dans la durée. Votre situation évolue : événements familiaux, cessions d'entreprise, évolutions réglementaires ou fiscales et nous veillons en permanence à ce que votre stratégie patrimoniale reste cohérente avec vos objectifs. Ce suivi s'appuie sur des points d'étape réguliers et sur une veille technique constante, nous permettant de vous alerter et de vous proposer des ajustements dès qu'une opportunité ou un risque est identifié.</p>
+      <h2 class="titre-section">La mise en œuvre par le pôle Gestion</h2>
       <a class="btn" href="pole-gestion.html">Découvrir le Pôle Gestion<span class="btn__fleche" aria-hidden="true">→</span></a>
     </div>
   </section>
 
-  <!-- 5. Vos besoins -->
-  <section id="besoins" class="section--blanc" style="--precedent: var(--sable);">
-    <p class="decroche"><span class="decroche__point"></span>Vos besoins</p>
-    <div class="wrap--court wrap">
-      <div class="entete-bloc reveal" data-reveal>
-        <h2 class="titre-section">Nous accompagnons</h2>
-      </div>
-      <div class="grille-deux reveal" data-reveal>
-        <article class="carte">
-          <h3 class="carte__titre">Les particuliers</h3>
-          <div class="filet-or"></div>
-          <p class="carte__texte">Construire, protéger, développer et transmettre votre patrimoine.</p>
-          <a class="btn btn--secondaire" href="#">En savoir plus<span class="btn__fleche" aria-hidden="true">→</span></a>
-        </article>
-        <article class="carte">
-          <h3 class="carte__titre">Les dirigeants</h3>
-          <div class="filet-or"></div>
-          <p class="carte__texte">Structurer votre patrimoine privé et professionnel.</p>
-          <a class="btn btn--secondaire" href="#">En savoir plus<span class="btn__fleche" aria-hidden="true">→</span></a>
-        </article>
-      </div>
-    </div>
-  </section>
-
   <!-- 6. Nous contacter -->
-  <section id="contact" class="section--sable" style="--precedent: var(--blanc);">
+  <section id="contact" class="section--blanc" style="--precedent: var(--sable);">
     <p class="decroche"><span class="decroche__point"></span>Contact</p>
     <div class="wrap--court wrap reveal" data-reveal>
       <div class="entete-bloc">
@@ -264,10 +266,11 @@
         <p class="pied__titre">Menu</p>
         <nav class="pied__liens" aria-label="Navigation de pied de page">
           <a href="index.html">Accueil</a>
-          <a href="cabinet.html">Cyrval</a>
+          <a href="notre-histoire.html">Notre cabinet</a>
           <a href="pole-conseil.html">Nos expertises</a>
-          <a href="#besoins">Vos besoins</a>
+          <a href="particuliers.html">Vos besoins</a>
           <a href="actualites.html">Actualités et conseils</a>
+          <a href="acces-client.html">Accès client</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>

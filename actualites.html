@@ -70,15 +70,34 @@
 
     <nav class="nav" aria-label="Navigation principale">
       <a href="index.html">Accueil</a>
-      <a href="cabinet.html">Cyrval</a>
-      <a href="pole-conseil.html">Nos expertises</a>
-      <a href="index.html#besoins">Vos besoins</a>
-      <a class="est-active" href="actualites.html" aria-current="page">Actualités et conseils</a>
-      <a href="index.html#contact">Contact</a>
+      <div class="nav-groupe">
+        <button class="nav-groupe__label" type="button" aria-haspopup="true" aria-expanded="false">Notre cabinet</button>
+        <div class="nav-groupe__menu">
+          <a href="notre-histoire.html">Notre histoire</a>
+          <a href="notre-equipe.html">Notre équipe</a>
+          <a href="notre-methode.html">Notre méthode</a>
+        </div>
+      </div>
+      <div class="nav-groupe">
+        <button class="nav-groupe__label" type="button" aria-haspopup="true" aria-expanded="false">Nos expertises</button>
+        <div class="nav-groupe__menu">
+          <a href="pole-conseil.html">Pôle Conseil</a>
+          <a href="pole-gestion.html">Pôle Gestion</a>
+        </div>
+      </div>
+      <div class="nav-groupe">
+        <button class="nav-groupe__label" type="button" aria-haspopup="true" aria-expanded="false">Vos besoins</button>
+        <div class="nav-groupe__menu">
+          <a href="particuliers.html">Particuliers</a>
+          <a href="dirigeants.html">Dirigeants</a>
+        </div>
+      </div>
+      <a class="est-active" href="actualites.html">Actualités et conseils</a>
+      <a href="#contact">Contact</a>
     </nav>
 
     <div class="entete__actions">
-      <a class="lien-acces" href="#">Accès client ↗</a>
+      <a class="lien-acces" href="acces-client.html">Accès client ↗</a>
       <a class="lien-linkedin" href="#" aria-label="CYRVAL sur LinkedIn">in</a>
     </div>
 
@@ -90,13 +109,20 @@
   <div class="menu-mobile">
     <div class="menu-mobile__inner">
       <a href="index.html">Accueil</a>
-      <a href="cabinet.html">Cyrval</a>
-      <a href="pole-conseil.html">Nos expertises</a>
-      <a href="index.html#besoins">Vos besoins</a>
+      <p class="menu-mobile__rubrique">Notre cabinet</p>
+      <a class="menu-mobile__sous" href="notre-histoire.html">Notre histoire</a>
+      <a class="menu-mobile__sous" href="notre-equipe.html">Notre équipe</a>
+      <a class="menu-mobile__sous" href="notre-methode.html">Notre méthode</a>
+      <p class="menu-mobile__rubrique">Nos expertises</p>
+      <a class="menu-mobile__sous" href="pole-conseil.html">Pôle Conseil</a>
+      <a class="menu-mobile__sous" href="pole-gestion.html">Pôle Gestion</a>
+      <p class="menu-mobile__rubrique">Vos besoins</p>
+      <a class="menu-mobile__sous" href="particuliers.html">Particuliers</a>
+      <a class="menu-mobile__sous" href="dirigeants.html">Dirigeants</a>
       <a class="est-active" href="actualites.html">Actualités et conseils</a>
-      <a href="index.html#contact">Contact</a>
+      <a href="#contact">Contact</a>
       <div class="menu-mobile__pied">
-        <a class="lien-acces" href="#">Accès client ↗</a>
+        <a class="lien-acces" href="acces-client.html">Accès client ↗</a>
         <a class="lien-linkedin" href="#" aria-label="CYRVAL sur LinkedIn">in</a>
       </div>
     </div>
@@ -240,11 +266,12 @@
         <p class="pied__titre">Menu</p>
         <nav class="pied__liens" aria-label="Navigation de pied de page">
           <a href="index.html">Accueil</a>
-          <a href="cabinet.html">Cyrval</a>
+          <a href="notre-histoire.html">Notre cabinet</a>
           <a href="pole-conseil.html">Nos expertises</a>
-          <a href="index.html#besoins">Vos besoins</a>
-          <a href="actualites.html">Actualités et conseils</a>
-          <a href="index.html#contact">Contact</a>
+          <a href="particuliers.html">Vos besoins</a>
+          <a class="est-active" href="actualites.html">Actualités et conseils</a>
+          <a href="acces-client.html">Accès client</a>
+          <a href="#contact">Contact</a>
         </nav>
       </div>
       <div class="pied__reseaux">

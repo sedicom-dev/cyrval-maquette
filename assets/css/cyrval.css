@@ -197,7 +197,10 @@ main > section { position: relative; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js .reveal { opacity: 1; transform: none; transition: none; }
+  .js .reveal,
+  .js .etape,
+  .js .domaine,
+  .js .parcours__etape { opacity: 1; transform: none; transition: none; }
   * { scroll-behavior: auto !important; }
 }
 
@@ -603,6 +606,101 @@ main > section { position: relative; }
 .nav a:hover::before,
 .nav a.est-active::before { opacity: 1; transform: scale(1); }
 
+/* Rubrique à sous-pages : libellé non cliquable + menu déroulant */
+.nav-groupe { position: relative; display: flex; align-items: center; }
+
+.nav-groupe__label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: 900 12px/1 var(--font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--encre);
+  transition: color .2s ease;
+}
+
+.nav-groupe__label::after {
+  content: '';
+  width: 5px; height: 5px;
+  margin-top: -2px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  opacity: .55;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.nav-groupe:hover .nav-groupe__label,
+.nav-groupe:focus-within .nav-groupe__label,
+.nav-groupe__label.est-active { color: var(--bleu); }
+
+.nav-groupe:hover .nav-groupe__label::after,
+.nav-groupe:focus-within .nav-groupe__label::after { transform: rotate(225deg); opacity: 1; }
+
+/* La pastille dorée de la rubrique active, comme les liens simples */
+.nav-groupe__label.est-active::before {
+  content: '';
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  width: 6px; height: 6px;
+  margin-top: -3px;
+  border-radius: 50%;
+  background: var(--or);
+}
+
+.nav-groupe__menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  min-width: 210px;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--blanc);
+  border: 1px solid var(--bord);
+  border-radius: 14px;
+  box-shadow: 0 18px 36px rgba(0, 55, 77, .14);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+  z-index: 20;
+}
+
+.nav-groupe:hover .nav-groupe__menu,
+.nav-groupe:focus-within .nav-groupe__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(6px);
+}
+
+/* Les entrées du déroulé n'héritent pas du style capitales/pastille de .nav a */
+.nav-groupe__menu a {
+  position: static;
+  padding: 11px 14px;
+  border-radius: 9px;
+  font: 700 13px/1.3 var(--font);
+  letter-spacing: .01em;
+  text-transform: none;
+  color: var(--encre);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .15s ease, color .15s ease;
+}
+
+.nav-groupe__menu a::before { display: none; }
+
+.nav-groupe__menu a:hover,
+.nav-groupe__menu a.est-active { background: var(--fond); color: var(--bleu); }
+
 .entete__actions {
   display: flex;
   align-items: center;
@@ -746,6 +844,17 @@ main > section { position: relative; }
 }
 
 .menu-mobile a.est-active { color: var(--bleu); font-weight: 500; }
+
+.menu-mobile__rubrique {
+  margin: 0;
+  padding: 20px 0 6px;
+  font: 900 12px/1 var(--font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gris);
+}
+
+.menu-mobile a.menu-mobile__sous { padding-left: 16px; font-size: 16px; }
 
 .menu-mobile__pied {
   display: flex;
@@ -1599,6 +1708,159 @@ main > section { position: relative; }
 .partage__liens a:hover { background: var(--bleu); color: var(--blanc); border-color: var(--bleu); }
 
 /* =============================================================
+   13bis. Pages intérieures : équipe, parcours, portails
+   ============================================================= */
+
+/* Équipe : cartes membres, photo ronde */
+.equipe {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.membre { text-align: center; }
+
+.membre__photo {
+  width: 176px; height: 176px;
+  margin: 0 auto 26px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--sable);
+}
+
+.membre__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.membre__nom { font: 600 var(--t-carte) / 1.2 var(--font); color: var(--bleu); }
+
+.membre__fonction {
+  margin: 8px 0 16px;
+  font: 900 12px/1.2 var(--font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--or);
+}
+
+.membre__bio {
+  max-width: 320px;
+  margin: 0 auto;
+  font: 400 16px/1.7 var(--font);
+  color: var(--gris);
+}
+
+/* Parcours vertical, animé au défilement (Notre méthode).
+   Réutilise les hameçons JS data-sequence="verticale" / data-etape /
+   data-progression : le filet doré central se remplit au scroll. */
+.parcours {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.parcours__rail,
+.parcours__progression {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+}
+
+.parcours__rail { bottom: 8px; background: var(--bord); }
+.parcours__progression { height: 0; background: var(--or); transition: height .6s ease; }
+
+.parcours__etape {
+  position: relative;
+  width: 50%;
+  margin-bottom: 56px;
+  padding: 0 52px;
+}
+
+.parcours__etape:last-child { margin-bottom: 0; }
+.parcours__etape:nth-of-type(odd) { text-align: right; }
+.parcours__etape:nth-of-type(even) { margin-left: 50%; text-align: left; }
+
+.parcours__etape::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--blanc);
+  border: 3px solid var(--or);
+  z-index: 1;
+}
+
+.parcours__etape:nth-of-type(odd)::before { right: -9px; }
+.parcours__etape:nth-of-type(even)::before { left: -9px; }
+
+.js .parcours__etape {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+
+.js .parcours__etape.est-visible { opacity: 1; transform: translateY(0); }
+
+.parcours__numero {
+  font: 600 13px/1 var(--font);
+  letter-spacing: .1em;
+  color: var(--or);
+  margin-bottom: 12px;
+}
+
+.parcours__titre { font: 600 var(--t-carte) / 1.2 var(--font); color: var(--bleu); margin-bottom: 10px; }
+.parcours__lead { font: 400 18px/1.6 var(--font); color: var(--encre); margin-bottom: 10px; }
+.parcours__texte { font: 400 15px/1.7 var(--font); color: var(--gris); }
+
+/* Répertoire des portails clients (Accès client) */
+.portails {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.portail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 26px 28px;
+  background: var(--blanc);
+  border: 1px solid var(--bord);
+  border-radius: var(--r-arrondi);
+  text-decoration: none;
+  color: var(--bleu);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.portail:hover {
+  border-color: var(--bleu);
+  box-shadow: 0 12px 28px rgba(0, 55, 77, .08);
+  transform: translateY(-2px);
+}
+
+.portail__nom { font: 600 18px/1.3 var(--font); }
+
+.portail__fleche {
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--fond);
+  color: var(--bleu);
+  font-size: 15px;
+  transition: background .2s ease, color .2s ease;
+}
+
+.portail:hover .portail__fleche { background: var(--bleu); color: var(--blanc); }
+
+/* =============================================================
    14. Responsive
    ============================================================= */
 
@@ -1606,7 +1868,7 @@ main > section { position: relative; }
    entre le logo et l'accès client : menu déplié. Seuil remonté de 1300 à
    1350 quand le logo est passé de 113 à 149 px de large : la pastille
    LinkedIn était repoussée hors champ juste au-dessus de l'ancien seuil. */
-@media (max-width: 1350px) {
+@media (max-width: 1400px) {
   .nav { display: none; }
   .entete__actions { display: none; }
   .burger { display: flex; }
@@ -1638,6 +1900,8 @@ main > section { position: relative; }
   .formulaire { padding: 40px; }
   .carte { padding: 36px 32px; }
   .actus-grille { grid-template-columns: repeat(2, 1fr); gap: 40px 32px; }
+  .equipe { grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
+  .portails { grid-template-columns: repeat(2, 1fr); }
   .pole { padding-right: 40px; }
   .pole:last-child { padding-left: 40px; }
   .methode__etapes { gap: 24px; }
@@ -1715,6 +1979,21 @@ main > section { position: relative; }
 
   .actus-grille { grid-template-columns: 1fr; gap: 48px; }
   .actus-grille .article__corps { padding: 18px 0 0; }
+  .equipe { grid-template-columns: 1fr; gap: 40px; }
+  .portails { grid-template-columns: 1fr; }
+
+  /* parcours en une colonne, ligne à gauche */
+  .parcours__rail, .parcours__progression { left: 9px; }
+  .parcours__etape,
+  .parcours__etape:nth-of-type(odd),
+  .parcours__etape:nth-of-type(even) {
+    width: 100%;
+    margin-left: 0;
+    padding: 0 0 0 40px;
+    text-align: left;
+  }
+  .parcours__etape:nth-of-type(odd)::before,
+  .parcours__etape:nth-of-type(even)::before { left: 0; right: auto; }
   .filtres { margin-bottom: 40px; }
   .pagination { margin-top: 48px; }
   .corps-article h2 { font-size: 22px; }
