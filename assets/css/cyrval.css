@@ -1714,19 +1714,34 @@ main > section { position: relative; }
    ============================================================= */
 
 /* Équipe : cartes membres, photo ronde */
+/* Fiches en bandeau horizontal : identité à gauche, biographie à droite.
+   Les biographies fournies vont d'un à trois paragraphes ; en colonnes
+   côte à côte l'écart sautait aux yeux, empilées en pleine largeur il ne
+   se voit plus. */
 .equipe {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 48px 40px;
-  max-width: 1100px;
+  grid-template-columns: 1fr;
+  gap: 72px;
+  max-width: 980px;
   margin: 0 auto;
 }
 
-.membre { text-align: center; }
+.membre {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 56px;
+  align-items: start;
+  text-align: left;
+}
+
+.membre__identite { text-align: center; }
+
+/* sans plafond, la biographie court sur ~100 caractères par ligne */
+.membre__texte { max-width: 600px; }
 
 .membre__photo {
   width: 176px; height: 176px;
-  margin: 0 auto 26px;
+  margin: 0 auto 22px;
   border-radius: 50%;
   overflow: hidden;
   background: var(--sable);
@@ -1745,29 +1760,12 @@ main > section { position: relative; }
 }
 
 .membre__bio {
-  max-width: 320px;
-  margin: 0 auto;
+  margin: 0;
   font: 400 16px/1.7 var(--font);
   color: var(--gris);
 }
 
 .membre__bio + .membre__bio { margin-top: 16px; }
-
-/* Variante à deux membres. La grille à trois colonnes laisserait une colonne
-   vide, et les biographies fournies par le client sont trop longues pour un
-   centrage : on élargit les colonnes et on aligne le texte à gauche. Les
-   hauteurs sont libres (align-items: start), les deux bios n'ayant pas du
-   tout la même longueur. */
-.equipe--duo {
-  grid-template-columns: repeat(2, 1fr);
-  max-width: 880px;
-  align-items: start;
-}
-
-.equipe--duo .membre__bio {
-  max-width: 400px;
-  text-align: left;
-}
 
 /* Parcours vertical, animé au défilement (Notre méthode).
    Réutilise les hameçons JS data-sequence="verticale" / data-etape /
@@ -1987,9 +1985,9 @@ main > section { position: relative; }
   .formulaire { padding: 40px; }
   .carte { padding: 36px 32px; }
   .actus-grille { grid-template-columns: repeat(2, 1fr); gap: 40px 32px; }
-  .equipe { grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
-  /* la règle ci-dessus est postérieure au modificateur, il faut le redire */
-  .equipe--duo { grid-template-columns: repeat(2, 1fr); }
+  .equipe { gap: 56px; }
+  .membre { grid-template-columns: 168px 1fr; gap: 36px; }
+  .membre__photo { width: 144px; height: 144px; }
   .portails { grid-template-columns: repeat(2, 1fr); }
   .pole { padding-right: 40px; }
   .pole:last-child { padding-left: 40px; }
@@ -2068,7 +2066,9 @@ main > section { position: relative; }
 
   .actus-grille { grid-template-columns: 1fr; gap: 48px; }
   .actus-grille .article__corps { padding: 18px 0 0; }
-  .equipe { grid-template-columns: 1fr; gap: 40px; }
+  .equipe { gap: 48px; }
+  /* plus la place pour deux colonnes : l'identité repasse au-dessus */
+  .membre { grid-template-columns: 1fr; gap: 24px; }
   .portails { grid-template-columns: 1fr; }
   .accordeon__tete { font-size: 16px; padding: 18px 20px; }
   .accordeon__corps-inner { padding: 0 20px 20px; }
