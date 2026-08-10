@@ -1751,6 +1751,24 @@ main > section { position: relative; }
   color: var(--gris);
 }
 
+.membre__bio + .membre__bio { margin-top: 16px; }
+
+/* Variante à deux membres. La grille à trois colonnes laisserait une colonne
+   vide, et les biographies fournies par le client sont trop longues pour un
+   centrage : on élargit les colonnes et on aligne le texte à gauche. Les
+   hauteurs sont libres (align-items: start), les deux bios n'ayant pas du
+   tout la même longueur. */
+.equipe--duo {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 880px;
+  align-items: start;
+}
+
+.equipe--duo .membre__bio {
+  max-width: 400px;
+  text-align: left;
+}
+
 /* Parcours vertical, animé au défilement (Notre méthode).
    Réutilise les hameçons JS data-sequence="verticale" / data-etape /
    data-progression : le filet doré central se remplit au scroll. */
@@ -1970,6 +1988,8 @@ main > section { position: relative; }
   .carte { padding: 36px 32px; }
   .actus-grille { grid-template-columns: repeat(2, 1fr); gap: 40px 32px; }
   .equipe { grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
+  /* la règle ci-dessus est postérieure au modificateur, il faut le redire */
+  .equipe--duo { grid-template-columns: repeat(2, 1fr); }
   .portails { grid-template-columns: repeat(2, 1fr); }
   .pole { padding-right: 40px; }
   .pole:last-child { padding-left: 40px; }
