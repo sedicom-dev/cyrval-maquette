@@ -52,14 +52,15 @@
   outline-offset: 3px;
 }
 
-/* La bulle. Elle s'ouvre sous la pastille pour ne pas recouvrir le texte
-   qu'elle commente, et bascule au-dessus quand le bas de l'écran est trop
-   proche. Le script s'occupe de la bascule et du recadrage horizontal. */
+/* La bulle. Elle vit à la racine du document, pas dans le texte annoté :
+   plusieurs conteneurs de la page (.media, .hero-page) sont en overflow
+   hidden et la découperaient. Le script la place en pixels sous la
+   pastille, et la bascule au-dessus quand le bas de l'écran est proche. */
 .note__bulle {
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 50%;
-  z-index: 80;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 95;
   width: max-content;
   max-width: min(340px, 78vw);
   padding: 13px 15px;
@@ -80,20 +81,12 @@
   white-space: normal;
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, 4px);
-  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  transition: opacity 0.15s ease, visibility 0.15s;
 }
 
-.note.est-ouverte .note__bulle {
+.note__bulle.est-ouverte {
   opacity: 1;
   visibility: visible;
-  transform: translate(-50%, 0);
-}
-
-/* Bulle repositionnée au-dessus quand il n'y a pas la place en dessous. */
-.note--dessus .note__bulle {
-  bottom: calc(100% + 12px);
-  top: auto;
 }
 
 .note__etiquette {

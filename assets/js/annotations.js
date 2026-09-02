@@ -21,47 +21,49 @@
 
   function fermer() {
     if (ouverte) {
-      ouverte.classList.remove('est-ouverte', 'note--dessus');
-      ouverte.querySelector('.note__puce').setAttribute('aria-expanded', 'false');
+      ouverte.bulle.classList.remove('est-ouverte');
+      ouverte.puce.setAttribute('aria-expanded', 'false');
       ouverte = null;
     }
   }
 
-  function ouvrir(note) {
-    if (ouverte === note) {
+  function ouvrir(entree) {
+    if (ouverte === entree) {
       return;
     }
     fermer();
-    note.classList.add('est-ouverte');
-    note.querySelector('.note__puce').setAttribute('aria-expanded', 'true');
-    ouverte = note;
-    caler(note);
+    entree.bulle.classList.add('est-ouverte');
+    entree.puce.setAttribute('aria-expanded', 'true');
+    ouverte = entree;
+    caler(entree);
   }
 
-  /* La bulle est centrée sous la pastille par défaut. On la décale
-     horizontalement si elle sort de l'écran, et on la bascule au-dessus
-     s'il n'y a pas la place en dessous. */
-  function caler(note) {
-    var bulle = note.querySelector('.note__bulle');
-    bulle.style.marginLeft = '0px';
-
-    var boite = bulle.getBoundingClientRect();
+  /* La bulle est en position fixe : on la pose en pixels, centrée sous la
+     pastille. On la ramène dans l'écran si elle déborde à droite ou à
+     gauche, et on la bascule au-dessus s'il n'y a pas la place dessous. */
+  function caler(entree) {
+    var bulle = entree.bulle;
     var marge = 12;
-    var debord = 0;
 
-    if (boite.left < marge) {
-      debord = marge - boite.left;
-    } else if (boite.right > window.innerWidth - marge) {
-      debord = window.innerWidth - marge - boite.right;
+    /* Mesure à position neutre, sinon la largeur dépend du placement. */
+    bulle.style.left = '0px';
+    bulle.style.top = '0px';
+
+    var puce = entree.puce.getBoundingClientRect();
+    var boite = bulle.getBoundingClientRect();
+
+    var gauche = puce.left + puce.width / 2 - boite.width / 2;
+    gauche = Math.max(marge, Math.min(gauche, window.innerWidth - boite.width - marge));
+
+    var haut = puce.bottom + marge;
+    var deborde = haut + boite.height > window.innerHeight - marge;
+    var placeAuDessus = puce.top - boite.height - marge > marge;
+    if (deborde && placeAuDessus) {
+      haut = puce.top - boite.height - marge;
     }
 
-    if (debord) {
-      bulle.style.marginLeft = Math.round(debord) + 'px';
-    }
-
-    if (boite.bottom > window.innerHeight - marge && boite.height + marge < note.getBoundingClientRect().top) {
-      note.classList.add('note--dessus');
-    }
+    bulle.style.left = Math.round(gauche) + 'px';
+    bulle.style.top = Math.round(haut) + 'px';
   }
 
   Array.prototype.forEach.call(cibles, function (cible, index) {
@@ -96,17 +98,21 @@
     bulle.appendChild(document.createTextNode(texte));
 
     note.appendChild(puce);
-    note.appendChild(bulle);
     cible.appendChild(note);
+    /* La bulle rejoint la racine du document, hors des conteneurs qui la
+       découperaient. Le lien avec sa pastille tient dans cette entrée. */
+    document.body.appendChild(bulle);
+
+    var entree = { puce: puce, bulle: bulle };
 
     note.addEventListener('mouseenter', function () {
-      ouvrir(note);
+      ouvrir(entree);
     });
     note.addEventListener('mouseleave', function () {
       fermer();
     });
     puce.addEventListener('focus', function () {
-      ouvrir(note);
+      ouvrir(entree);
     });
     puce.addEventListener('blur', function () {
       fermer();
@@ -115,10 +121,10 @@
     puce.addEventListener('click', function (evenement) {
       evenement.preventDefault();
       evenement.stopPropagation();
-      if (ouverte === note) {
+      if (ouverte === entree) {
         fermer();
       } else {
-        ouvrir(note);
+        ouvrir(entree);
       }
     });
   });
@@ -130,6 +136,26 @@
     }
   });
   window.addEventListener('resize', fermer);
+
+  /* La bulle étant fixe, elle se décrocherait de sa pastille au défilement.
+     On la replace, au rythme de l'affichage. */
+  var replacePrevu = false;
+  window.addEventListener(
+    'scroll',
+    function () {
+      if (!ouverte || replacePrevu) {
+        return;
+      }
+      replacePrevu = true;
+      window.requestAnimationFrame(function () {
+        replacePrevu = false;
+        if (ouverte) {
+          caler(ouverte);
+        }
+      });
+    },
+    { passive: true }
+  );
 
   /* Bouton d'affichage général. L'état est retenu d'une page à l'autre
      quand le navigateur l'autorise, sinon la couche s'affiche. */

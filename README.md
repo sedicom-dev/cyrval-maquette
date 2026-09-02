@@ -44,10 +44,15 @@ Deux réglages du dessin sont volontaires et se cassent au premier nettoyage :
 ## Couche de relecture
 
 `assets/css/annotations.css` et `assets/js/annotations.js` posent une pastille
-numérotée après chaque texte qui ne vient pas du client : soit un arbitrage à
-rendre, soit un contenu encore attendu. Un survol, un focus clavier ou un appui
+numérotée après chaque texte qui ne vient pas du client : soit un texte non
+validé, soit un contenu encore attendu. Un survol, un focus clavier ou un appui
 affiche le commentaire. Un bouton en bas à droite masque toute la couche pour
 relire la page nette, et l'état est retenu d'une page à l'autre.
+
+La bulle est posée à la racine du document, en position fixe, et placée en
+pixels par le script. C'est ce qui la fait passer au-dessus de tout : plusieurs
+conteneurs de la page (`.media`, `.hero-page`) sont en `overflow: hidden` et la
+découpaient tant qu'elle vivait dans le texte annoté.
 
 Les commentaires se déclarent dans le HTML, en un seul attribut :
 
